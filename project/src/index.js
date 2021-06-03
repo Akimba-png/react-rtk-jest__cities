@@ -8,6 +8,6 @@ const Settings = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App placeCardsCount={Settings.PLACE_CARDS_COUNT}/>
+    <App placeCardsCount={Settings.PLACE_CARDS_COUNT} />
   </React.StrictMode>,
   document.getElementById('root'));

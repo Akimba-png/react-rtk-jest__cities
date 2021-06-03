@@ -5,7 +5,7 @@ import MainPage from './../main-page/main-page';
 function App(props) {
   const {placeCardsCount} = props;
   return (
-    <MainPage placeCardsCount={placeCardsCount}/>
+    <MainPage placeCardsCount={placeCardsCount} />
   );
 }
 

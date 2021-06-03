@@ -94,7 +94,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(placeCardsCount).fill(null).map(() => <PlaceCard key={getOrderNumber()}/>)}
+                {new Array(placeCardsCount).fill(null).map(() => <PlaceCard key={getOrderNumber()} />)}
               </div>
             </section>
             <div className="cities__right-section">
