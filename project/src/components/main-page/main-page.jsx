@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from './../place-card/place-card';
+import Logo from './../logo/logo';
 import {getOrderNumber} from './../../utils/common.js';
+
+const LOGO_ACTIVE_MODE = true;
 
 function MainPage(props) {
   const {placeCardsCount} = props;
@@ -10,11 +13,7 @@ function MainPage(props) {
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link header__logo-link--active" href="/#">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
+            <Logo logoActiveMode={LOGO_ACTIVE_MODE} />
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
