@@ -1,29 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {AppRoute} from './../../const.js';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute } from './../../const.js';
 import MainPage from './../main-page/main-page';
 import LoginPage from './../login-page/login-page';
 import FavoritesPage from './../favorites-page/favorites-page';
 import PropertyPage from './../property-page/property-page';
 import NotFoundPage from './../not-found-page/not-found-page';
+import placeCardListProp from './../place-card-list/place-card-list.prop';
 
 function App(props) {
-  const {placeCardsCount} = props;
+  const { offers } = props;
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <MainPage placeCardsCount={placeCardsCount} />
+        <Route
+          exact path={AppRoute.MAIN}
+          render={(routerProps) => <MainPage offers={offers} {...routerProps} />}
+        >
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginPage />
         </Route>
-        <Route exact path={AppRoute.FAVORITE}>
-          <FavoritesPage />
+        <Route
+          exact path={AppRoute.FAVORITE}
+          render={(routerProps) => <FavoritesPage offers={offers} {...routerProps} />}
+        >
         </Route>
-        <Route exact path={AppRoute.PROPERTY}>
-          <PropertyPage />
+        <Route
+          exact path={AppRoute.PROPERTY}
+          render={(routerProps) => <PropertyPage offers={offers} {...routerProps} />}
+        >
         </Route>
         <Route>
           <NotFoundPage />
@@ -34,7 +40,7 @@ function App(props) {
 }
 
 App.propTypes = {
-  placeCardsCount: PropTypes.number.isRequired,
+  offers: placeCardListProp,
 };
 
 export default App;
