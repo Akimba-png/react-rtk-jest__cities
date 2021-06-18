@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { getOrderNumber } from '../../utils/common';
 
 const STAR_RATING_NUMBER = 5;
@@ -11,18 +11,20 @@ function ReviewForm() {
     },
   );
 
+  const formRef = useRef(null);
+
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    const textAreaElement = evt.target.querySelector('.reviews__textarea');
-    const radioElements = Array.from(evt.target.querySelectorAll('.form__rating-input'));
-    const CheckedRadioElement = radioElements.find((radioElement) => radioElement.checked);
-    const currentRating = CheckedRadioElement ? CheckedRadioElement.value : reviewValue.rating;
-    setReviewValue({ ...reviewValue, rating: currentRating, comment: textAreaElement.value });
-    textAreaElement.value = '';
+    const formData = new FormData(formRef.current);
+    const textAreaValue = formData.get('review');
+    const radioValue = formData.get('rating');
+    const currentRating = radioValue ? radioValue : reviewValue.rating;
+    setReviewValue({ ...reviewValue, rating: currentRating, comment: textAreaValue });
+    formRef.current.querySelector('.reviews__textarea').value = '';
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post"
+    <form ref={formRef} className="reviews__form form" action="#" method="post"
       onSubmit={handleFormSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
