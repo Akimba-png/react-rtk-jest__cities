@@ -1,13 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import PlaceCard from './../place-card/place-card';
+import PlaceCardList from './../place-card-list/place-card-list';
 import Logo from './../logo/logo';
-import {getOrderNumber} from './../../utils/common.js';
+import placeCardListProp from './../place-card-list/place-card-list.prop';
+import mainPageProp from './main-page.prop';
+import { CardMode } from './../../const';
 
 const LOGO_ACTIVE_MODE = true;
 
 function MainPage(props) {
-  const {placeCardsCount} = props;
+  const { offers, match } = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -93,7 +94,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {new Array(placeCardsCount).fill(null).map(() => <PlaceCard key={getOrderNumber()} />)}
+                <PlaceCardList offers={offers} cardMode={CardMode[match.path]} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -107,7 +108,8 @@ function MainPage(props) {
 }
 
 MainPage.propTypes = {
-  placeCardsCount: PropTypes.number.isRequired,
+  offers: placeCardListProp,
+  match: mainPageProp,
 };
 
 export default MainPage;
