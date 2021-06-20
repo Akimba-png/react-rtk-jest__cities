@@ -19,7 +19,7 @@ function PlaceCard(props) {
     type,
   } = offer;
 
-  const setActiveCardOnMainPage = (evt) => {
+  const hanldeActiveCardOnMouseOver = (evt) => {
     if (evt.view.location.pathname !== AppRoute.FAVORITE) {
       onCardMouseOver(offer.id);
     }
@@ -27,7 +27,7 @@ function PlaceCard(props) {
 
   return (
     <article className={CardCssValue[cardMode].ARTICLE_CLASS_NAME}
-      onMouseEnter={setActiveCardOnMainPage}
+      onMouseEnter={hanldeActiveCardOnMouseOver}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={CardCssValue[cardMode].IMAGE_CLASS_NAME}>
