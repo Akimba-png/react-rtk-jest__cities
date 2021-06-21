@@ -280,7 +280,14 @@ function PropertyPage(props) {
 
 PropertyPage.propTypes = {
   offers: placeCardListProp,
-  match: PropTypes.object,
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }),
 };
 
 export default PropertyPage;
