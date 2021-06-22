@@ -5,7 +5,7 @@ import Map from './../map/map';
 import placeCardListProp from './../place-card-list/place-card-list.prop';
 import mainPageProp from './main-page.prop';
 import { CardMode } from './../../const';
-import {City} from './../../mocks/city';
+import { cityCoordinates } from './../../mocks/city';
 
 
 const LOGO_ACTIVE_MODE = true;
@@ -102,7 +102,7 @@ function MainPage(props) {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={City} />
+                <Map offers={offers} cityCoordinates={cityCoordinates} />
               </section>
             </div>
           </div>
