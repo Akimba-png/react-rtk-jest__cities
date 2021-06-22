@@ -1,46 +1,6 @@
-import { nanoid } from 'nanoid';
-import {
-  getRandomInteger,
-  getRandomArrayElement,
-  generateRandomArray,
-  getRandomBoolean,
-  getRandomDecimal
-} from './../utils/common';
-
-const POSSIBLE_DESCRIPTIONS = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Fusce tristique felis at fermentum pharetra.',
-  'Aliquam id orci ut lectus varius viverra.',
-  'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-  'Sed sed nisi sed augue convallis suscipit in sed felis.',
-  'Aliquam erat volutpat.',
-  'Nunc fermentum tortor ac porta dapibus.',
-  'In rutrum ac purus sit amet tempus.',
-];
-
-const POSSIBLE_TITLES = [
-  'Beautiful & luxurious studio at great location',
-  'Beautiful & luxurious apartment at great location',
-  'Nice, cozy, warm big bed apartment',
-  'Wood and stone place',
-  'White castle',
-  'Canal View Prinsengracht',
-];
-
-const POSSIBLE_GOODS = ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Wi-Fi', 'Fridge', 'Towels', 'Baby seat'];
-const POSSIBLE_HOSTS = ['Bartholomeow', 'Edward ', 'Blackbeard', 'Anny'];
-const POSSIBLE_TYPES = ['apartment', 'room', 'house', 'hotel'];
-
-const generatePicture = () => `http://picsum.photos/260/200?r=${Math.random()}`;
-const generateAvatar = () => `https://i.pravatar.cc/128?rnd=${Math.random()}`;
-
-
-const getOffer = () => (
+const offers = [
   {
-    bedrooms: getRandomInteger(1, 4),
+    bedrooms: 4,
     city: {
       location: {
         latitude: 52.370216,
@@ -49,33 +9,132 @@ const getOffer = () => (
       },
       name: 'Amsterdam',
     },
-    description: getRandomArrayElement(POSSIBLE_DESCRIPTIONS),
-    goods: generateRandomArray(POSSIBLE_GOODS, 1, 6),
+    description: 'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
+    goods: ['Washing machine', 'Dishwasher', 'Coffee machine', 'Fridge', 'Towels', 'Baby seat'],
     host: {
-      avatarUrl: generateAvatar(),
-      id: nanoid(),
-      isPro: getRandomBoolean(),
-      name: getRandomArrayElement(POSSIBLE_HOSTS),
+      avatarUrl: 'https://i.pravatar.cc/128?rnd=0.2677786053272486',
+      id: 'Emz3E1B9KpHq4mWmA-5LB',
+      isPro: false,
+      name: 'Edward',
     },
-    id: nanoid(),
-    images: new Array(getRandomInteger(1, 6)).fill(null).map(generatePicture),
-    isFavorite: getRandomBoolean(),
-    isPremium: getRandomBoolean(),
+    id: 'n3yPbcI4YP6BS2i9hWfiD',
+    images: ['http://picsum.photos/260/200?r=0.10389928557018835'],
+    isFavorite: false,
+    isPremium: false,
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 8,
     },
-    maxAdults: getRandomInteger(1, 4),
-    previewImage: generatePicture(),
-    price: getRandomInteger(500, 1500),
-    rating: getRandomDecimal(1, 5, 1),
-    title: getRandomArrayElement(POSSIBLE_TITLES),
-    type: getRandomArrayElement(POSSIBLE_TYPES),
-
-  }
-);
-
-const offers = new Array(4).fill(null).map(getOffer);
+    maxAdults: 2,
+    previewImage: 'http://picsum.photos/260/200?r=0.8995964144535431',
+    price: 1395,
+    rating: 1.8,
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'house',
+  },
+  {
+    bedrooms: 2,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
+    description: 'Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.',
+    goods: ['Wi-Fi', 'Kitchen', 'Coffee machine', 'Towels', 'Baby seat', 'Fridge', 'Dishwasher', 'Washing machine', 'Cable TV'],
+    host: {
+      avatarUrl: 'https://i.pravatar.cc/128?rnd=0.5784987020524561',
+      id: 'S0-sPCKB0vfom7E1-RTDO',
+      isPro: true,
+      name: 'Bartholomeow',
+    },
+    id: 'L6aBjUBWiehNX1kKeY0_g',
+    images: ['http://picsum.photos/260/200?r=0.626813905365041', 'http://picsum.photos/260/200?r=0.9343503578532466', 'http://picsum.photos/260/200?r=0.325504554470329', 'http://picsum.photos/260/200?r=0.5697250579179318', 'http://picsum.photos/260/200?r=0.6797874479291994', 'http://picsum.photos/260/200?r=0.056862822217166986'],
+    isFavorite: true,
+    isPremium: true,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
+    maxAdults: 1,
+    previewImage: 'http://picsum.photos/260/200?r=0.7527378314693207',
+    price: 1027,
+    rating: 3.6,
+    title: 'White castle',
+    type: 'apartment',
+  },
+  {
+    bedrooms: 3,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
+    description: 'Fusce tristique felis at fermentum pharetra.',
+    goods:  ['Coffee machine', 'Fridge', 'Towels', 'Baby seat'],
+    host: {
+      avatarUrl: 'https://i.pravatar.cc/128?rnd=0.9858004044022255',
+      id: 'YyGQZaWOHGWjYe5znVf3T',
+      isPro: false,
+      name: 'Blackbeard',
+    },
+    id: 'gfbsj7Y4YR30xj3dP9Aot',
+    images: ['http://picsum.photos/260/200?r=0.03665392638195053', 'http://picsum.photos/260/200?r=0.7158093378641364'],
+    isFavorite: false,
+    isPremium: true,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8,
+    },
+    maxAdults: 2,
+    previewImage: 'http://picsum.photos/260/200?r=0.4444053655954192',
+    price: 987,
+    rating: 4.5,
+    title: 'Wood and stone place',
+    type: 'hotel',
+  },
+  {
+    bedrooms: 4,
+    city: {
+      location: {
+        latitude: 52.370216,
+        longitude: 4.895168,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
+    description: 'Sed sed nisi sed augue convallis suscipit in sed felis.',
+    goods: ['Dishwasher', 'Cable TV'],
+    host: {
+      avatarUrl: 'https://i.pravatar.cc/128?rnd=0.05960844776618357',
+      id: '9ohgcSq_pH05LMB9d17Io',
+      isPro: true,
+      name: 'Anny',
+    },
+    id: 'nMFS4QhZ4xyXtHOzaDRWt',
+    images: ['http://picsum.photos/260/200?r=0.3554898816600838', 'http://picsum.photos/260/200?r=0.012182690344092917', 'http://picsum.photos/260/200?r=0.900652258915303', 'http://picsum.photos/260/200?r=0.8198265081429545'],
+    isFavorite: true,
+    isPremium: false,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8,
+    },
+    maxAdults: 4,
+    previewImage: 'http://picsum.photos/260/200?r=0.32161455374204007',
+    price: 605,
+    rating: 3.6,
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'room',
+  },
+];
 
 export default offers;

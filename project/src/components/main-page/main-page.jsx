@@ -1,9 +1,12 @@
 import React from 'react';
 import PlaceCardList from './../place-card-list/place-card-list';
 import Logo from './../logo/logo';
+import Map from './../map/map';
 import placeCardListProp from './../place-card-list/place-card-list.prop';
 import mainPageProp from './main-page.prop';
 import { CardMode } from './../../const';
+import { cityCoordinates } from './../../mocks/city';
+
 
 const LOGO_ACTIVE_MODE = true;
 
@@ -98,7 +101,9 @@ function MainPage(props) {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map offers={offers} cityCoordinates={cityCoordinates} />
+              </section>
             </div>
           </div>
         </div>
