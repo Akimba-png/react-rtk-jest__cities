@@ -7,9 +7,10 @@ import FavoritesPage from './../favorites-page/favorites-page';
 import PropertyPage from './../property-page/property-page';
 import NotFoundPage from './../not-found-page/not-found-page';
 import placeCardListProp from './../place-card-list/place-card-list.prop';
+import reviewsListProp from './../reviews-list/reviews-list.prop.js';
 
 function App(props) {
-  const { offers } = props;
+  const { offers, reviews } = props;
   return (
     <BrowserRouter>
       <Switch>
@@ -28,7 +29,7 @@ function App(props) {
         </Route>
         <Route
           exact path={AppRoute.PROPERTY}
-          render={(routerProps) => <PropertyPage offers={offers} {...routerProps} />}
+          render={(routerProps) => <PropertyPage offers={offers} reviews={reviews} {...routerProps} />}
         >
         </Route>
         <Route>
@@ -41,6 +42,7 @@ function App(props) {
 
 App.propTypes = {
   offers: placeCardListProp,
+  reviews: reviewsListProp,
 };
 
 export default App;
