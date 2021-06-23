@@ -2,16 +2,23 @@ import React from 'react';
 import Logo from './../logo/logo';
 import ReviewsList from './../reviews-list/reviews-list';
 import ReviewForm from './../review-form/review-form';
+import Map from './../map/map';
 import placeCardListProp from './../place-card-list/place-card-list.prop';
 import reviewsListProp from './../reviews-list/reviews-list.prop';
 import PropTypes from 'prop-types';
 import { convertValueToShare } from './../../utils/common';
 
+import { cityCoordinates } from './../../mocks/city';
+
 const PLURAL_POSTFIX = 's';
+const NEARBY_OFFERS_NUMBER = 3;
 
 function PropertyPage(props) {
   const { offers, reviews } = props;
   const offer = offers.find((element) => element.id === props.match.params.id);
+
+  const getNearestNearbyOffers = (nearbyOffers) => nearbyOffers.slice(0, NEARBY_OFFERS_NUMBER);
+  const nearestNearbyOffers = getNearestNearbyOffers(offers);
 
   const {
     images,
@@ -147,7 +154,9 @@ function PropertyPage(props) {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map offers={nearestNearbyOffers} cityCoordinates={cityCoordinates} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
