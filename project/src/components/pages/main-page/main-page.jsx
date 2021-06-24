@@ -1,17 +1,16 @@
 import React from 'react';
-import PlaceCardList from './../place-card-list/place-card-list';
-import Logo from './../logo/logo';
-import Map from './../map/map';
-import placeCardListProp from './../place-card-list/place-card-list.prop';
-import mainPageProp from './main-page.prop';
-import { CardMode } from './../../const';
-import { cityCoordinates } from './../../mocks/city';
+import CardList from '../../cards/card-list/card-list';
+import Logo from '../../logo/logo';
+import Map from '../../map/map';
+import cardListProp from './../../cards/card-list/card-list.prop';
+import { CardCssValue } from '../../../const';
+import { cityCoordinates } from '../../../mocks/city';
 
 
 const LOGO_ACTIVE_MODE = true;
 
 function MainPage(props) {
-  const { offers, match } = props;
+  const { offers } = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -97,7 +96,7 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCardList offers={offers} cardMode={CardMode[match.path]} />
+                <CardList offers={offers} cardMode={CardCssValue.Main} />
               </div>
             </section>
             <div className="cities__right-section">
@@ -113,8 +112,7 @@ function MainPage(props) {
 }
 
 MainPage.propTypes = {
-  offers: placeCardListProp,
-  match: mainPageProp,
+  offers: cardListProp,
 };
 
 export default MainPage;

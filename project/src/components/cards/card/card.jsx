@@ -1,13 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import placeCardProp from './place-card.prop';
-import { convertValueToShare } from './../../utils/common';
-import { CardCssValue, AppRoute } from './../../const';
+import cardOfferProp from './card-offer.prop';
+import cardCssValueProp from './card-css-value.prop';
+import { convertValueToShare } from './../../../utils/common';
+import { CardCssValue } from './../../../const';
 
-function PlaceCard(props) {
+const DefaultStyle = {
+  TYPE: 'property-card',
+  ARTICLE_CLASS_NAME: 'near-places__card',
+  IMAGE_WRAPPER_CLASS_NAME: 'near-places__image-wrapper',
+  IMAGE_WIDTH: 260,
+  IMAGE_HEIGHT: 200,
+  INFO_CLASS_NAME: '',
+};
 
-  const { offer, cardMode, onCardMouseOver } = props;
+function Card(props) {
+  // console.log(props)
+
+  const { offer, cssValue = DefaultStyle, onCardMouseOver } = props;
 
   const {
     isPremium,
@@ -19,23 +30,31 @@ function PlaceCard(props) {
     type,
   } = offer;
 
+  const {
+    ARTICLE_CLASS_NAME,
+    IMAGE_WRAPPER_CLASS_NAME,
+    IMAGE_WIDTH,
+    IMAGE_HEIGHT,
+    INFO_CLASS_NAME = '',
+  } = cssValue;
+
   const hanldeActiveCardOnMouseOver = (evt) => {
-    if (evt.view.location.pathname !== AppRoute.FAVORITE) {
+    if (cssValue.TYPE === CardCssValue.Main.TYPE) {
       onCardMouseOver(offer.id);
     }
   };
 
   return (
-    <article className={CardCssValue[cardMode].ARTICLE_CLASS_NAME}
+    <article className={`${ARTICLE_CLASS_NAME} place-card`}
       onMouseEnter={hanldeActiveCardOnMouseOver}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={CardCssValue[cardMode].IMAGE_CLASS_NAME}>
+      <div className={`${IMAGE_WRAPPER_CLASS_NAME} place-card__image-wrapper`}>
         <a href="/#">
-          <img className="place-card__image" src={previewImage} width={CardCssValue[cardMode].WIDTH} height={CardCssValue[cardMode].HEIGHT} alt="Visual presentation of the apartments" />
+          <img className="place-card__image" src={previewImage} width={`${IMAGE_WIDTH}`} height={`${IMAGE_HEIGHT}`} alt="Visual presentation of the apartments" />
         </a>
       </div>
-      <div className={CardCssValue[cardMode].INFO_CLASS_NAME}>
+      <div className={`${INFO_CLASS_NAME} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -45,7 +64,7 @@ function PlaceCard(props) {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{CardCssValue[cardMode].BOOKMARK_STATUS}</span>
+            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -63,10 +82,10 @@ function PlaceCard(props) {
   );
 }
 
-PlaceCard.propTypes = {
-  offer: placeCardProp,
-  cardMode: PropTypes.string.isRequired,
+Card.propTypes = {
+  offer: cardOfferProp,
   onCardMouseOver: PropTypes.func,
+  cssValue: cardCssValueProp,
 };
 
-export default PlaceCard;
+export default Card;
