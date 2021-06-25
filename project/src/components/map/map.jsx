@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMap from './../../hooks/useMap';
-import placeCardListProp from './../place-card-list/place-card-list.prop';
+import cardListProp from './../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
 
 const MapIcon = {
@@ -41,7 +41,7 @@ function Map({ offers, cityCoordinates }) {
 }
 
 Map.propTypes = {
-  offers: placeCardListProp,
+  offers: cardListProp,
   cityCoordinates: PropTypes.arrayOf(PropTypes.number.isRequired),
 };
 

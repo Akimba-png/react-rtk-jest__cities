@@ -1,21 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from './../../const.js';
-import MainPage from './../main-page/main-page';
-import LoginPage from './../login-page/login-page';
-import FavoritesPage from './../favorites-page/favorites-page';
-import PropertyPage from './../property-page/property-page';
-import NotFoundPage from './../not-found-page/not-found-page';
-import placeCardListProp from './../place-card-list/place-card-list.prop';
+import MainPage from './../pages/main-page/main-page';
+import LoginPage from './../pages/login-page/login-page';
+import FavoritesPage from './../pages/favorites-page/favorites-page';
+import PropertyPage from './../pages/property-page/property-page';
+import NotFoundPage from './../pages/not-found-page/not-found-page';
+import cardListProp from './../cards/card-list/card-list.prop';
+import reviewsListProp from './../reviews-list/reviews-list.prop.js';
 
 function App(props) {
-  const { offers } = props;
+  const { offers, reviews } = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route
           exact path={AppRoute.MAIN}
-          render={(routerProps) => <MainPage offers={offers} {...routerProps} />}
+          render={(routerProps) => <MainPage offers={offers} />}
+
         >
         </Route>
         <Route exact path={AppRoute.LOGIN}>
@@ -23,12 +25,12 @@ function App(props) {
         </Route>
         <Route
           exact path={AppRoute.FAVORITE}
-          render={(routerProps) => <FavoritesPage offers={offers} {...routerProps} />}
+          render={(routerProps) => <FavoritesPage offers={offers} />}
         >
         </Route>
         <Route
           exact path={AppRoute.PROPERTY}
-          render={(routerProps) => <PropertyPage offers={offers} {...routerProps} />}
+          render={(routerProps) => <PropertyPage offers={offers} reviews={reviews} {...routerProps} />}
         >
         </Route>
         <Route>
@@ -40,7 +42,8 @@ function App(props) {
 }
 
 App.propTypes = {
-  offers: placeCardListProp,
+  offers: cardListProp,
+  reviews: reviewsListProp,
 };
 
 export default App;

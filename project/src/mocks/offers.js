@@ -137,4 +137,4 @@ const offers = [
   },
 ];
 
-export default offers;
+export {offers};

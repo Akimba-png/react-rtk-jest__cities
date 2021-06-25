@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import offers from './mocks/offers';
-
-// const Settings = {
-//   PLACE_CARDS_COUNT: 5,
-// };
+import { offers } from './mocks/offers';
+import { reviews } from './mocks/reviews';
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      // placeCardsCount={Settings.PLACE_CARDS_COUNT}
-      offers={offers}
+      offers={offers} reviews={reviews}
     />
   </React.StrictMode>,
   document.getElementById('root'));

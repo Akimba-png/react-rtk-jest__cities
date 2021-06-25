@@ -1,12 +1,11 @@
 import React from 'react';
-import Logo from './../logo/logo';
-import PlaceCardList from './../place-card-list/place-card-list';
-import placeCardListProp from './../place-card-list/place-card-list.prop';
-import mainPageProp from './../main-page/main-page.prop';
-import { CardMode } from './../../const';
+import Logo from '../../logo/logo';
+import CardList from '../../cards/card-list/card-list';
+import cardListProp from './../../cards/card-list/card-list.prop';
+import { CardCssValue } from '../../../const';
 
 function FavoritesPage(props) {
-  const { offers, match } = props;
+  const { offers } = props;
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -49,7 +48,7 @@ function FavoritesPage(props) {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  <PlaceCardList offers={favoriteOffers} cardMode={CardMode[match.path]} />
+                  <CardList offers={favoriteOffers} cardMode={CardCssValue.Favorite} />
                 </div>
               </li>
             </ul>
@@ -66,8 +65,7 @@ function FavoritesPage(props) {
 }
 
 FavoritesPage.propTypes = {
-  offers: placeCardListProp,
-  match: mainPageProp,
+  offers: cardListProp,
 };
 
 export default FavoritesPage;
