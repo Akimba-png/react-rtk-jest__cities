@@ -16,8 +16,6 @@ const DefaultStyle = {
 };
 
 function Card(props) {
-  // console.log(props)
-
   const { offer, cssValue = DefaultStyle, onCardMouseOver } = props;
 
   const {

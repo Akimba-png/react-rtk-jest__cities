@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
 import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
@@ -8,8 +9,6 @@ import CardList from './../../cards/card-list/card-list';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import reviewsListProp from './../../reviews-list/reviews-list.prop';
 import { convertValueToShare } from './../../../utils/common';
-
-import { cityCoordinates } from './../../../mocks/city';
 
 const PLURAL_POSTFIX = 's';
 const NEARBY_OFFERS_NUMBER = 3;
@@ -156,7 +155,7 @@ function PropertyPage(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearestNearbyOffers} cityCoordinates={cityCoordinates} />
+            <Map offers={nearestNearbyOffers} />
           </section>
         </section>
         <div className="container">
@@ -185,4 +184,9 @@ PropertyPage.propTypes = {
   reviews: reviewsListProp,
 };
 
-export default PropertyPage;
+const mapStateToProps = (state) => ({
+  offers: state.cityOffers,
+});
+
+export {PropertyPage};
+export default connect(mapStateToProps, null)(PropertyPage);
