@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import useMap from './../../hooks/useMap';
-import cardListProp from './../cards/card-list/card-list.prop';
+import useMap from './../../../hooks/useMap';
+import cardListProp from './../../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
 
 const FIRST_ELEMENT_ARRAY_INDEX = 0;

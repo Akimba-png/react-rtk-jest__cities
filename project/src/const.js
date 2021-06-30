@@ -1,3 +1,7 @@
+export const Index = {
+  FIRST: 1,
+};
+
 export const AppRoute = {
   MAIN: '/',
   LOGIN: '/login',

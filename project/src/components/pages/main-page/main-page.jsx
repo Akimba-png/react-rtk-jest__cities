@@ -1,18 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import CardList from '../../cards/card-list/card-list';
 import Logo from '../../logo/logo';
-import Map from '../../map/map';
+import CardListTitle from './../../cards/card-list-title/card-list-title';
+import MainPageMap from './../../maps/main-page-map/main-page-map';
+import MainPageCardList from './../../cards/main-page-card-list/main-page-card-list';
 import LocationList from './../../location-list/location-list';
-import cardListProp from './../../cards/card-list/card-list.prop';
-import { CardCssValue } from '../../../const';
 
 const LOGO_ACTIVE_MODE = true;
 
-function MainPage(props) {
-  const { city, offers } = props;
-  const offerNumber = offers.length;
+function MainPage() {
 
   return (
     <div className="page page--gray page--main">
@@ -51,7 +46,7 @@ function MainPage(props) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offerNumber} {offerNumber === 1 ? 'place' : 'places'} to stay in {city}</b>
+              <CardListTitle />
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -68,12 +63,12 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardList offers={offers} cardMode={CardCssValue.Main} />
+                <MainPageCardList />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} />
+                <MainPageMap />
               </section>
             </div>
           </div>
@@ -83,15 +78,4 @@ function MainPage(props) {
   );
 }
 
-MainPage.propTypes = {
-  city: PropTypes.string,
-  offers: cardListProp,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: state.cityOffers,
-});
-
-export { MainPage };
-export default connect(mapStateToProps, null)(MainPage);
+export default MainPage;

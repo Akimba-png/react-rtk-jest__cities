@@ -12,5 +12,3 @@ export const getOrderNumber = createOrderNumberGenerator();
 export const convertValueToShare = (currentValue) =>
   (currentValue / StarRatingValue.MAX) * StarRatingValue.TOTAL;
 
-export const getCityOffers = (offers, city) =>
-  offers.filter((offer) => offer.city.name === city);

@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
 import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
-import Map from './../../map/map';
+import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import reviewsListProp from './../../reviews-list/reviews-list.prop';
+import { getFilteredOffers } from './../../../store/selectors';
 import { convertValueToShare } from './../../../utils/common';
 
 const PLURAL_POSTFIX = 's';
@@ -185,7 +186,7 @@ PropertyPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.cityOffers,
+  offers: getFilteredOffers(state),
 });
 
 export {PropertyPage};

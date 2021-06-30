@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cardListProp from './../cards/card-list/card-list.prop';
 import { connect } from 'react-redux';
 import { ActionCreator } from './../../store/action';
 import { LOCATIONS } from './../../const';
 
+
 function LocationList(props) {
-  const { offers, changeCity, city } = props;
+  const { city, changeCity } = props;
+
+  const handleLinkClick = (location) => () => changeCity(location);
+
   return (
     <ul className="locations__list tabs__list">
       {LOCATIONS.map((location, index) => {
         const keyValue = `${index}-${location}`;
         return (
           <li className="locations__item" key={keyValue}>
-            <a onClick={
-              () => changeCity(offers, location)
-            } className={`locations__item-link tabs__item ${location === city ? 'tabs__item--active' : ''}`} href="/#"
-            >
+            <a onClick={handleLinkClick(location)} className={`locations__item-link tabs__item ${location === city ? 'tabs__item--active' : ''}`} href="/#">
               <span>{location}</span>
             </a>
           </li>
@@ -27,20 +27,17 @@ function LocationList(props) {
 }
 
 LocationList.propTypes = {
-  offers: cardListProp,
-  changeCity: PropTypes.func,
   city: PropTypes.string,
+  changeCity: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  offers: state.offers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(offers, city) {
+  changeCity(city) {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.filterOffer(offers, city));
   },
 });
 
