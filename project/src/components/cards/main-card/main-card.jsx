@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Card from '../card/card';
 import cardOfferProp from './../card/card-offer.prop';
-import { CardCssValue } from '../../../const';
+import { CardCssValue } from './../../../const';
+import { ActionCreator } from './../../../store/action';
 
 function MainCard(props) {
   return <Card cssValue={CardCssValue.Main} {...props} />;
@@ -10,7 +12,15 @@ function MainCard(props) {
 
 MainCard.propTypes = {
   offer: cardOfferProp,
-  onCardMouseOver: PropTypes.func,
+  changeActiveCardId: PropTypes.func.isRequired,
 };
 
-export default MainCard;
+const mapDispatchToProps = (dispatch) => ({
+  changeActiveCardId(cardId) {
+    dispatch(ActionCreator.changeActiveCardId(cardId));
+  },
+});
+
+
+export {MainCard};
+export default connect(null, mapDispatchToProps)(MainCard);

@@ -9,6 +9,7 @@ const DefaultValues = {
 const initialState = {
   city: DefaultValues.CITY,
   sortType: DefaultValues.SORTING,
+  activeCardId: '',
   offers,
 };
 
@@ -23,6 +24,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         sortType: action.payload,
+      };
+    case ActionType.CHANGE_ACTIVE_CARD_ID:
+      return {
+        ...state,
+        activeCardId: action.payload,
       };
     default:
       return state;

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import useMap from './../../../hooks/useMap';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
@@ -12,12 +14,13 @@ const DeafaultCity = {
 
 const MapIcon = {
   URL: 'img/pin.svg',
+  ACTIVE_URL: 'img/pin-active.svg',
   SIZES: [30, 30],
   ANCHOR_SIZES: [15, 30],
 };
 
 function Map(props) {
-  const { offers } = props;
+  const { offers, activeCardId } = props;
 
   let mapValue;
   if (offers.length !== 0) {
@@ -38,8 +41,15 @@ function Map(props) {
 
   useEffect(() => {
     let layerGroup;
+
     const customIcon = leaflet.icon({
       iconUrl: MapIcon.URL,
+      iconSize: MapIcon.SIZES,
+      iconAnchor: MapIcon.ANCHOR_SIZES,
+    });
+
+    const activeCustomIcon = leaflet.icon({
+      iconUrl: MapIcon.ACTIVE_URL,
       iconSize: MapIcon.SIZES,
       iconAnchor: MapIcon.ANCHOR_SIZES,
     });
@@ -48,11 +58,12 @@ function Map(props) {
       map.setView(mapValue.cityCoordinates, mapValue.zoom);
       layerGroup = leaflet.layerGroup().addTo(map);
       offers.forEach((offer) => {
+        const iconType = offer.id === activeCardId ? activeCustomIcon : customIcon;
         leaflet.marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         }, {
-          icon: customIcon,
+          icon: iconType,
         }).addTo(layerGroup);
       });
     }
@@ -60,7 +71,7 @@ function Map(props) {
     if (map) {
       return () => layerGroup.clearLayers();
     }
-  }, [map, offers, mapValue]);
+  }, [map, offers, mapValue, activeCardId]);
 
   return (
     <div style={{ height: '100%' }} ref={mapRef}>
@@ -70,6 +81,12 @@ function Map(props) {
 
 Map.propTypes = {
   offers: cardListProp,
+  activeCardId: PropTypes.string,
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  activeCardId: state.activeCardId,
+});
+
+export {Map};
+export default connect(mapStateToProps, null)(Map);

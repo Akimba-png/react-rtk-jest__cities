@@ -49,9 +49,7 @@ function MainPage() {
               <h2 className="visually-hidden">Places</h2>
               <CardListTitle />
               <Sorting />
-              <div className="cities__places-list places__list tabs__content">
-                <MainPageCardList />
-              </div>
+              <MainPageCardList />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

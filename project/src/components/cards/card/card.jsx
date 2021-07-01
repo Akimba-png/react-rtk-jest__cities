@@ -16,7 +16,7 @@ const DefaultStyle = {
 };
 
 function Card(props) {
-  const { offer, cssValue = DefaultStyle, onCardMouseOver } = props;
+  const { offer, cssValue = DefaultStyle, changeActiveCardId } = props;
 
   const {
     isPremium,
@@ -36,15 +36,15 @@ function Card(props) {
     INFO_CLASS_NAME = '',
   } = cssValue;
 
-  const hanldeActiveCardOnMouseOver = (evt) => {
+  const hanldeActiveCardIdOnMouseOver = (evt) => {
     if (cssValue.TYPE === CardCssValue.Main.TYPE) {
-      onCardMouseOver(offer.id);
+      changeActiveCardId(offer.id);
     }
   };
 
   return (
     <article className={`${ARTICLE_CLASS_NAME} place-card`}
-      onMouseEnter={hanldeActiveCardOnMouseOver}
+      onMouseEnter={hanldeActiveCardIdOnMouseOver}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${IMAGE_WRAPPER_CLASS_NAME} place-card__image-wrapper`}>
@@ -82,7 +82,7 @@ function Card(props) {
 
 Card.propTypes = {
   offer: cardOfferProp,
-  onCardMouseOver: PropTypes.func,
+  changeActiveCardId: PropTypes.func,
   cssValue: cardCssValueProp,
 };
 
