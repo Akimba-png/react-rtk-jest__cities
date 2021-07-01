@@ -1,10 +1,14 @@
 import { ActionType } from './action';
 import { offers } from './../mocks/offers';
 
-const DEFAULT_CITY = 'Paris';
+const DefaultValues = {
+  CITY: 'Paris',
+  SORTING: 'Popular',
+};
 
 const initialState = {
-  city: DEFAULT_CITY,
+  city: DefaultValues.CITY,
+  sortType: DefaultValues.SORTING,
   offers,
 };
 
@@ -14,6 +18,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
+      };
+    case ActionType.CHANGE_SORTIG:
+      return {
+        ...state,
+        sortType: action.payload,
       };
     default:
       return state;
