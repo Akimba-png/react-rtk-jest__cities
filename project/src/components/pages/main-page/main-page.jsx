@@ -1,16 +1,14 @@
 import React from 'react';
-import CardList from '../../cards/card-list/card-list';
 import Logo from '../../logo/logo';
-import Map from '../../map/map';
-import cardListProp from './../../cards/card-list/card-list.prop';
-import { CardCssValue } from '../../../const';
-import { cityCoordinates } from '../../../mocks/city';
-
+import CardListTitle from './../../cards/card-list-title/card-list-title';
+import MainPageMap from './../../maps/main-page-map/main-page-map';
+import MainPageCardList from './../../cards/main-page-card-list/main-page-card-list';
+import LocationList from './../../location-list/location-list';
 
 const LOGO_ACTIVE_MODE = true;
 
-function MainPage(props) {
-  const { offers } = props;
+function MainPage() {
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -41,45 +39,14 @@ function MainPage(props) {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <LocationList />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <CardListTitle />
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -96,12 +63,12 @@ function MainPage(props) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardList offers={offers} cardMode={CardCssValue.Main} />
+                <MainPageCardList />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} cityCoordinates={cityCoordinates} />
+                <MainPageMap />
               </section>
             </div>
           </div>
@@ -110,9 +77,5 @@ function MainPage(props) {
     </div>
   );
 }
-
-MainPage.propTypes = {
-  offers: cardListProp,
-};
 
 export default MainPage;

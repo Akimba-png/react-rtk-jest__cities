@@ -135,6 +135,40 @@ const offers = [
     title: 'Beautiful & luxurious studio at great location',
     type: 'room',
   },
+  {
+    bedrooms: 5,
+    city: {
+      location: {
+        latitude: 48.856663,
+        longitude: 2.351556,
+        zoom: 10,
+      },
+      name: 'Paris',
+    },
+    description: 'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
+    goods: ['Washing machine', 'Dishwasher', 'Coffee machine', 'Fridge', 'Towels', 'Baby seat'],
+    host: {
+      avatarUrl: 'https://i.pravatar.cc/128?rnd=0.2677784053272486',
+      id: 'Emz3E1B9KpHq4tWmA-5LB',
+      isPro: false,
+      name: 'Edward',
+    },
+    id: 'n3yPbcI4YP6BS2i9ffwshWfiD',
+    images: ['http://picsum.photos/260/200?r=0.1038994285345570418835'],
+    isFavorite: true,
+    isPremium: false,
+    location: {
+      latitude: 48.827234,
+      longitude: 2.431356,
+      zoom: 8,
+    },
+    maxAdults: 2,
+    previewImage: 'http://picsum.photos/260/200?r=0.89959634144535431',
+    price: 1395,
+    rating: 1.8,
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'house',
+  },
 ];
 
 export {offers};

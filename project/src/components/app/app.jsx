@@ -16,8 +16,7 @@ function App(props) {
       <Switch>
         <Route
           exact path={AppRoute.MAIN}
-          render={(routerProps) => <MainPage offers={offers} />}
-
+          render={() => <MainPage />}
         >
         </Route>
         <Route exact path={AppRoute.LOGIN}>
@@ -30,7 +29,7 @@ function App(props) {
         </Route>
         <Route
           exact path={AppRoute.PROPERTY}
-          render={(routerProps) => <PropertyPage offers={offers} reviews={reviews} {...routerProps} />}
+          render={(routerProps) => <PropertyPage reviews={reviews} {...routerProps} />}
         >
         </Route>
         <Route>

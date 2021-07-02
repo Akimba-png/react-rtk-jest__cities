@@ -11,3 +11,4 @@ export const getOrderNumber = createOrderNumberGenerator();
 
 export const convertValueToShare = (currentValue) =>
   (currentValue / StarRatingValue.MAX) * StarRatingValue.TOTAL;
+
