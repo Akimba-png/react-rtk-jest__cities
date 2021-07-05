@@ -2,6 +2,7 @@ export const ActionType = {
   CHANGE_CITY: 'locationList/changeCity',
   CHANGE_SORTIG: 'sorting/changeSorting',
   CHANGE_ACTIVE_CARD_ID: 'mainCard/changeActiveCardId',
+  LOAD_OFFERS: 'data/loadOffers',
 };
 
 export const ActionCreator = {
@@ -16,5 +17,9 @@ export const ActionCreator = {
   changeActiveCardId: (cardId) => ({
     type: ActionType.CHANGE_ACTIVE_CARD_ID,
     payload: cardId,
+  }),
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers,
   }),
 };

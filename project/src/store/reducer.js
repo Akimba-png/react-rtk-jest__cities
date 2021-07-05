@@ -1,5 +1,4 @@
 import { ActionType } from './action';
-import { offers } from './../mocks/offers';
 
 const DefaultValues = {
   CITY: 'Paris',
@@ -10,7 +9,8 @@ const initialState = {
   city: DefaultValues.CITY,
   sortType: DefaultValues.SORTING,
   activeCardId: '',
-  offers,
+  offers: [],
+  isDataLoaded: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -29,6 +29,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCardId: action.payload,
+      };
+    case ActionType.LOAD_OFFERS:
+      return {
+        ...state,
+        offers: action.payload,
+        isDataLoaded: true,
       };
     default:
       return state;
