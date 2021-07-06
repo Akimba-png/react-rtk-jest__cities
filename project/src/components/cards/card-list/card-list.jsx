@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from './../card/card';
 import MainCard from './../main-card/main-card';
 import FavoriteCard from './../favorite-card/favorite-card';
@@ -8,12 +8,11 @@ import { CardCssValue } from '../../../const';
 
 function CardList(props) {
   const { offers, cardMode = {} } = props;
-  const [, setActiveCard] = useState({});
 
   const getCardDependOnType = (offer, type) => {
     switch (type) {
       case CardCssValue.Main.TYPE:
-        return <MainCard offer={offer} key={offer.id} onCardMouseOver={setActiveCard} />;
+        return <MainCard offer={offer} key={offer.id} />;
       case CardCssValue.Favorite.TYPE:
         return <FavoriteCard offer={offer} key={offer.id} />;
       default:

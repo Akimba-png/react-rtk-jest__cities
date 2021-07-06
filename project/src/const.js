@@ -1,3 +1,12 @@
+export const LOCATIONS = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export const Index = {
   FIRST: 1,
 };
@@ -27,4 +36,9 @@ export const CardCssValue = {
   },
 };
 
-export const LOCATIONS = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const SortValue = {
+  POPULAR: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  PRICE_TOP_RATING: 'Top rated first',
+};
