@@ -34,4 +34,3 @@ export const fetchOffersList = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.OFFERS)
     .then(({ data }) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.loadOffers(offers)));
-

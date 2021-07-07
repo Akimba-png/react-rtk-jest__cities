@@ -81,7 +81,7 @@ function Map(props) {
 
 Map.propTypes = {
   offers: cardListProp,
-  activeCardId: PropTypes.string,
+  activeCardId: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({

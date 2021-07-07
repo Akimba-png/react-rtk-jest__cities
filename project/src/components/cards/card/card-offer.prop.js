@@ -14,11 +14,11 @@ export default PropTypes.shape({
   goods: PropTypes.arrayOf(PropTypes.string.isRequired),
   host: PropTypes.shape({
     avatarUrl: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
   }),
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   images: PropTypes.arrayOf(PropTypes.string.isRequired),
   isFavorite: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,

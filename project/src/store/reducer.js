@@ -8,7 +8,7 @@ const DefaultValues = {
 const initialState = {
   city: DefaultValues.CITY,
   sortType: DefaultValues.SORTING,
-  activeCardId: '',
+  activeCardId: null,
   offers: [],
   isDataLoaded: false,
 };
