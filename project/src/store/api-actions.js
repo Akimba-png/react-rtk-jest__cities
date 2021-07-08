@@ -1,4 +1,4 @@
-import { ApiRoute, AuthorizationStatus } from './../const';
+import { ApiRoute, AuthorizationStatus, AppRoute } from './../const';
 import { ActionCreator } from './action';
 
 const adaptToClient = (offer) => {
@@ -39,4 +39,16 @@ export const checkAuth = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.LOGIN)
     .then(() =>
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {});
+    .catch(() => { });
+
+export const login = ({ email, password }) => (dispatch, _getState, api) =>
+  api.post(ApiRoute.LOGIN, { email, password })
+    .then(({ data }) => localStorage.setItem('token', data.token))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.redirect(AppRoute.MAIN)));
+
+
+export const logout = () => (dispatch, _getState, api) =>
+  api.delete(ApiRoute.LOGOUT)
+    .then(() => localStorage.removeItem('token'))
+    .then(() => dispatch(ActionCreator.logout()));

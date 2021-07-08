@@ -2,22 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { AuthorizationStatus, ApiRoute } from './../../const';
+import { logout } from './../../store/api-actions';
+import { AuthorizationStatus, ApiRoute, AppRoute } from './../../const';
 
-const createNavigationTemplate = (authorizationStatus) => {
+const createNavigationTemplate = (authorizationStatus, signOut) => {
   if (authorizationStatus === AuthorizationStatus.AUTH) {
+    const handleSignOutButton = (evt) => {
+      evt.preventDefault();
+      signOut();
+    };
+
     return (
       <nav className="header__nav">
         <ul className="header__nav-list">
           <li className="header__nav-item user">
-            <a className="header__nav-link header__nav-link--profile" href="/#">
+            <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITE}>
               <div className="header__avatar-wrapper user__avatar-wrapper">
               </div>
               <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-            </a>
+            </Link>
           </li>
           <li className="header__nav-item">
-            <a className="header__nav-link" href="/#">
+            <a onClick={handleSignOutButton} className="header__nav-link" href="/#">
               <span className="header__signout">Sign out</span>
             </a>
           </li>
@@ -41,17 +47,24 @@ const createNavigationTemplate = (authorizationStatus) => {
 
 
 function Navigation(props) {
-  const { authorizationStatus } = props;
-  return createNavigationTemplate(authorizationStatus);
+  const { authorizationStatus, signOut } = props;
+  return createNavigationTemplate(authorizationStatus, signOut);
 }
 
 Navigation.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
+  signOut: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  signOut() {
+    dispatch(logout());
+  },
+});
+
 export { Navigation };
-export default connect(mapStateToProps, null)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

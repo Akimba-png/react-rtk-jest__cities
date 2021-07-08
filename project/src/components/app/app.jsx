@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AppRoute } from './../../const.js';
@@ -12,6 +12,7 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import LoadingPage from './../pages/loading-page/loading-page';
 import reviewsListProp from './../reviews-list/reviews-list.prop.js';
 import { isAuthorizationStatusReceived } from './../../utils/common';
+import browserHistory from './../../browser-history.js';
 
 function App(props) {
   const { reviews, loadingStatus, currentAuthorizationStatus } = props;
@@ -21,7 +22,7 @@ function App(props) {
     );
   }
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route
           exact path={AppRoute.MAIN}
