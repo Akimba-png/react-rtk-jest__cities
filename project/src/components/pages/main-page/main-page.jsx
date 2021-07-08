@@ -5,6 +5,7 @@ import MainPageMap from './../../maps/main-page-map/main-page-map';
 import MainPageCardList from './../../cards/main-page-card-list/main-page-card-list';
 import LocationList from './../../location-list/location-list';
 import Sorting from './../../sorting/sorting';
+import Navigation from './../../navigation/navigation';
 
 const LOGO_ACTIVE_MODE = true;
 
@@ -16,22 +17,7 @@ function MainPage() {
         <div className="container">
           <div className="header__wrapper">
             <Logo logoActiveMode={LOGO_ACTIVE_MODE} />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <Navigation />
           </div>
         </div>
       </header>
