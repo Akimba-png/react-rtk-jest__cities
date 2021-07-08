@@ -27,7 +27,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   resetActiveCardId() {
-    dispatch(ActionCreator.changeActiveCardId(''));
+    dispatch(ActionCreator.changeActiveCardId(null));
   },
 });
 

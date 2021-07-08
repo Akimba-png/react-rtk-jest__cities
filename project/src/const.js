@@ -18,6 +18,10 @@ export const AppRoute = {
   PROPERTY: '/offer/:id',
 };
 
+export const ApiRoute = {
+  OFFERS: '/hotels',
+};
+
 export const CardCssValue = {
   Main: {
     TYPE: 'main-card',

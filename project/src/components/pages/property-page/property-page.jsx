@@ -16,7 +16,7 @@ const NEARBY_OFFERS_NUMBER = 3;
 
 function PropertyPage(props) {
   const { offers, reviews } = props;
-  const offer = offers.find((element) => element.id === props.match.params.id);
+  const offer = offers.find((element) => element.id === parseFloat(props.match.params.id));
 
   const getNearestNearbyOffers = (nearbyOffers) => nearbyOffers.slice(0, NEARBY_OFFERS_NUMBER);
   const nearestNearbyOffers = getNearestNearbyOffers(offers);

@@ -1,16 +1,23 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { AppRoute } from './../../const.js';
 import MainPage from './../pages/main-page/main-page';
 import LoginPage from './../pages/login-page/login-page';
 import FavoritesPage from './../pages/favorites-page/favorites-page';
 import PropertyPage from './../pages/property-page/property-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
-import cardListProp from './../cards/card-list/card-list.prop';
+import LoadingPage from './../pages/loading-page/loading-page';
 import reviewsListProp from './../reviews-list/reviews-list.prop.js';
 
 function App(props) {
-  const { offers, reviews } = props;
+  const { reviews, loadingStatus } = props;
+  if (!loadingStatus) {
+    return (
+      <LoadingPage />
+    );
+  }
   return (
     <BrowserRouter>
       <Switch>
@@ -24,7 +31,7 @@ function App(props) {
         </Route>
         <Route
           exact path={AppRoute.FAVORITE}
-          render={(routerProps) => <FavoritesPage offers={offers} />}
+          render={(routerProps) => <FavoritesPage />}
         >
         </Route>
         <Route
@@ -41,8 +48,13 @@ function App(props) {
 }
 
 App.propTypes = {
-  offers: cardListProp,
   reviews: reviewsListProp,
+  loadingStatus: PropTypes.bool,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  loadingStatus: state.isDataLoaded,
+});
+
+export { App };
+export default connect(mapStateToProps, null)(App);

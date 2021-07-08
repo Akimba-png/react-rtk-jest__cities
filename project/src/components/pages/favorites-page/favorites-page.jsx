@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Logo from '../../logo/logo';
 import CardList from '../../cards/card-list/card-list';
 import cardListProp from './../../cards/card-list/card-list.prop';
@@ -68,4 +69,9 @@ FavoritesPage.propTypes = {
   offers: cardListProp,
 };
 
-export default FavoritesPage;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+export { FavoritesPage };
+export default connect(mapStateToProps, null)(FavoritesPage);
