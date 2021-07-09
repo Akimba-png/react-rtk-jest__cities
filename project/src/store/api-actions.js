@@ -1,4 +1,4 @@
-import { ApiRoute } from './../const';
+import { ApiRoute, AuthorizationStatus } from './../const';
 import { ActionCreator } from './action';
 
 const adaptToClient = (offer) => {
@@ -34,3 +34,9 @@ export const fetchOffersList = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.OFFERS)
     .then(({ data }) => data.map(adaptToClient))
     .then((offers) => dispatch(ActionCreator.loadOffers(offers)));
+
+export const checkAuth = () => (dispatch, _getState, api) =>
+  api.get(ApiRoute.LOGIN)
+    .then(() =>
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => {});

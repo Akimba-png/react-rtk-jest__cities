@@ -3,6 +3,8 @@ export const ActionType = {
   CHANGE_SORTIG: 'sorting/changeSorting',
   CHANGE_ACTIVE_CARD_ID: 'mainCard/changeActiveCardId',
   LOAD_OFFERS: 'data/loadOffers',
+  REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
+  LOGOUT: 'user/logout',
 };
 
 export const ActionCreator = {
@@ -21,5 +23,12 @@ export const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
     payload: offers,
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRE_AUTHORIZATION,
+    payload: status,
+  }),
+  logout: () => ({
+    type: ActionType.LOGOUT,
   }),
 };

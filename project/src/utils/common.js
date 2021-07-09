@@ -1,3 +1,5 @@
+import { AuthorizationStatus } from './../const';
+
 const StarRatingValue = {
   TOTAL: 100,
   MAX: 5,
@@ -17,3 +19,6 @@ export const SortOption = {
   priceToLow:(offerA, offerB) => offerB.price - offerA.price,
   rating: (offerA, offerB) => offerB.rating - offerA.rating,
 };
+
+export const isAuthorizationStatusReceived = (currentAuthorizationStatus) =>
+  currentAuthorizationStatus !== AuthorizationStatus.UNKNOWN;
