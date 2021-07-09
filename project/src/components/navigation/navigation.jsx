@@ -6,7 +6,15 @@ import { logout } from './../../store/api-actions';
 import { AuthorizationStatus, ApiRoute, AppRoute } from './../../const';
 
 const createNavigationTemplate = (authorizationStatus, signOut) => {
+
   if (authorizationStatus === AuthorizationStatus.AUTH) {
+
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userDetails = {
+      email: userData.email,
+      avatar: userData.avatarUrl,
+    };
+
     const handleSignOutButton = (evt) => {
       evt.preventDefault();
       signOut();
@@ -18,8 +26,9 @@ const createNavigationTemplate = (authorizationStatus, signOut) => {
           <li className="header__nav-item user">
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITE}>
               <div className="header__avatar-wrapper user__avatar-wrapper">
+                <img src={userDetails.avatar} alt="user's avatar" />
               </div>
-              <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+              <span className="header__user-name user__name">{userDetails.email}</span>
             </Link>
           </li>
           <li className="header__nav-item">

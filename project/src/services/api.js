@@ -7,7 +7,7 @@ export const HttpResponseCode = {
   UNAUTHORIZED: 401,
 };
 
-const token = localStorage.getItem('token') ?? '';
+const token = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')).token : '';
 
 export const createApi = (onUnauthorized) => {
   const api = axios.create({
