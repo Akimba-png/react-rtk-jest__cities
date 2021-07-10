@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
+import LoadingPage from './../loading-page/loading-page';
 import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
 import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
-import cardListProp from './../../cards/card-list/card-list.prop';
-import reviewsListProp from './../../reviews-list/reviews-list.prop';
-import { getFilteredOffers } from './../../../store/selectors';
 import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
 import { propertyRoute } from './../../../const';
-
 import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
-const NEARBY_OFFERS_NUMBER = 3;
 
 function PropertyPage(props) {
-  const { offers, reviews, match } = props;
-  const [, setPropertyData] = useState();
+  const { match } = props;
+
+  const [propertyData, setPropertyData] = useState(null);
   const offerId = match.params.id;
 
   useEffect(() => {
@@ -35,10 +31,11 @@ function PropertyPage(props) {
     ]).then((data) => setPropertyData(data));
   }, [offerId]);
 
-  const offer = offers.find((element) => element.id === parseFloat(props.match.params.id));
+  if (!propertyData) {
+    return <LoadingPage />;
+  }
 
-  const getNearestNearbyOffers = (nearbyOffers) => nearbyOffers.slice(0, NEARBY_OFFERS_NUMBER);
-  const nearestNearbyOffers = getNearestNearbyOffers(offers);
+  const [offer, nearbyOffers, reviews] = propertyData;
 
   const {
     images,
@@ -148,9 +145,6 @@ function PropertyPage(props) {
                   <p className="property__text">
                     {description}
                   </p>
-                  <p className="property__text">
-                    {description}
-                  </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
@@ -160,14 +154,14 @@ function PropertyPage(props) {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearestNearbyOffers} />
+            <Map offers={nearbyOffers} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <CardList offers={nearestNearbyOffers} />
+              <CardList offers={nearbyOffers} />
             </div>
           </section>
         </div>
@@ -177,7 +171,6 @@ function PropertyPage(props) {
 }
 
 PropertyPage.propTypes = {
-  offers: cardListProp,
   match: PropTypes.shape({
     isExact: PropTypes.bool,
     params: PropTypes.shape({
@@ -186,12 +179,6 @@ PropertyPage.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }),
-  reviews: reviewsListProp,
 };
 
-const mapStateToProps = (state) => ({
-  offers: getFilteredOffers(state),
-});
-
-export { PropertyPage };
-export default connect(mapStateToProps, null)(PropertyPage);
+export default PropertyPage;
