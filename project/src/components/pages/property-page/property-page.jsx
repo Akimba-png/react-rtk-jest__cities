@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
@@ -11,12 +11,30 @@ import cardListProp from './../../cards/card-list/card-list.prop';
 import reviewsListProp from './../../reviews-list/reviews-list.prop';
 import { getFilteredOffers } from './../../../store/selectors';
 import { convertValueToShare } from './../../../utils/common';
+import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
+import { propertyRoute } from './../../../const';
+
+import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
 const NEARBY_OFFERS_NUMBER = 3;
 
 function PropertyPage(props) {
-  const { offers, reviews } = props;
+  const { offers, reviews, match } = props;
+  const [, setPropertyData] = useState();
+  const offerId = match.params.id;
+
+  useEffect(() => {
+    Promise.all([
+      api.get(propertyRoute.getOffer(offerId))
+        .then(({ data }) => adaptOfferToClient(data)),
+      api.get(propertyRoute.getOfferNearby(offerId))
+        .then(({ data }) => data.map(adaptOfferToClient)),
+      api.get(propertyRoute.getComment(offerId))
+        .then(({ data }) => data.map(adaptCommentToClient)),
+    ]).then((data) => setPropertyData(data));
+  }, [offerId]);
+
   const offer = offers.find((element) => element.id === parseFloat(props.match.params.id));
 
   const getNearestNearbyOffers = (nearbyOffers) => nearbyOffers.slice(0, NEARBY_OFFERS_NUMBER);
@@ -175,5 +193,5 @@ const mapStateToProps = (state) => ({
   offers: getFilteredOffers(state),
 });
 
-export {PropertyPage};
+export { PropertyPage };
 export default connect(mapStateToProps, null)(PropertyPage);

@@ -18,6 +18,18 @@ export const AppRoute = {
   PROPERTY: '/offer/:id',
 };
 
+export const propertyRoute = {
+  getOffer(offerId) {
+    return `/hotels/${offerId}`;
+  },
+  getOfferNearby(offerId) {
+    return `/hotels/${offerId}/nearby`;
+  },
+  getComment(offerId) {
+    return `/comments/${offerId}`;
+  },
+};
+
 export const ApiRoute = {
   OFFERS: '/hotels',
   LOGIN: '/login',

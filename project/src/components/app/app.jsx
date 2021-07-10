@@ -11,7 +11,7 @@ import PropertyPage from './../pages/property-page/property-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
 import LoadingPage from './../pages/loading-page/loading-page';
 import reviewsListProp from './../reviews-list/reviews-list.prop.js';
-import { isAuthorizationStatusReceived } from './../../utils/common';
+import { isAuthorizationStatusReceived } from './../../utils/server';
 import browserHistory from './../../browser-history.js';
 
 function App(props) {
