@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import LoadingPage from './../loading-page/loading-page';
+import NotFoundPage from './../not-found-page/not-found-page';
 import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
 import Map from './../../maps/map/map';
@@ -13,11 +14,13 @@ import { propertyRoute } from './../../../const';
 import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
+const NOT_FOUND_ERROR = 404;
 
 function PropertyPage(props) {
   const { match } = props;
 
   const [propertyData, setPropertyData] = useState(null);
+  const [errorStatus, setErrorStatus] = useState(null);
   const offerId = match.params.id;
 
   useEffect(() => {
@@ -28,8 +31,15 @@ function PropertyPage(props) {
         .then(({ data }) => data.map(adaptOfferToClient)),
       api.get(propertyRoute.getComment(offerId))
         .then(({ data }) => data.map(adaptCommentToClient)),
-    ]).then((data) => setPropertyData(data));
+    ]).then((data) => setPropertyData(data))
+      .catch((error) => {
+        setErrorStatus(error.response.status);
+      });
   }, [offerId]);
+
+  if (errorStatus === NOT_FOUND_ERROR) {
+    return <NotFoundPage />;
+  }
 
   if (!propertyData) {
     return <LoadingPage />;
