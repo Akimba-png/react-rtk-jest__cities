@@ -20,6 +20,14 @@ export const AppRoute = {
 
 export const ApiRoute = {
   OFFERS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};
+
+export const AuthorizationStatus = {
+  AUTH: 'authorised',
+  NOT_AUTH: 'not authorised',
+  UNKNOWN: 'unknown',
 };
 
 export const CardCssValue = {
