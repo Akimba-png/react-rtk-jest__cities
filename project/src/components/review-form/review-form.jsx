@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { api } from './../../store/store';
 import { getOrderNumber } from '../../utils/common';
+import { adaptCommentToClient } from './../../utils/server';
+import { propertyRoute } from './../../const';
 
 const STAR_RATING_NUMBER = 5;
+const ERROR_DISPLAY_TIME = 3000;
+const ERROR_MESSAGE = 'Server isn`t available. Try again later';
 
 const INITIAL_VALUE = {
   rating: '0',
@@ -10,19 +15,21 @@ const INITIAL_VALUE = {
 };
 
 const CommentLength = {
-  MIN: 5,
-  MAX: 10,
+  MIN: 50,
+  MAX: 300,
 };
 
 function ReviewForm(props) {
-  const { onSendReview, commentsLength } = props;
+  const { onSendReview, reviewsAmount, offerId } = props;
+
   const [reviewValue, setReviewValue] = useState(INITIAL_VALUE);
   const [sendingStatus, setSendingStatus] = useState(false);
-  console.log(sendingStatus)
+  const [commentError, setCommentError] = useState(false);
 
   useEffect(() => {
     setReviewValue(INITIAL_VALUE);
-  }, [commentsLength]);
+  }, [reviewsAmount]);
+
 
   const handleInputChange = (evt) => {
     const { name, value } = evt.target;
@@ -32,26 +39,42 @@ function ReviewForm(props) {
     });
   };
 
-  const handleFormSubmit = async (evt) => {
+  const sendReview = ({ rating, review: comment }) => {
     setSendingStatus(true);
-    evt.preventDefault();
-    await onSendReview(reviewValue);
-    setSendingStatus(false);
+    api.post(propertyRoute.postComment(offerId), { rating, comment })
+      .then(({ data }) => data.map(adaptCommentToClient))
+      .then(onSendReview)
+      .then(() => setSendingStatus(false))
+      .catch(() => {
+        setSendingStatus(false);
+        setCommentError(true);
+        setTimeout(
+          () => setCommentError(false),
+          ERROR_DISPLAY_TIME,
+        );
+      });
   };
 
-  // if (sendingStatus) {setSendingStatus(false)};
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    sendReview(reviewValue);
+  };
+
   const toggleSubmitButtonMode = () => {
     const commentLength = reviewValue.review.length;
     const isReviewCorrect = () =>
-      // reviewValue.rating > 0 &&
-      commentLength >= CommentLength.MIN
+      reviewValue.rating > 0
+      && commentLength >= CommentLength.MIN
       && commentLength <= CommentLength.MAX;
-    return isReviewCorrect() && !sendingStatus ? false : true;
+    return !(isReviewCorrect() && !sendingStatus);
   };
 
+
   return (
-    <form className="reviews__form form" action="#" method="post"
+    <form
       onSubmit={handleFormSubmit}
+      className="reviews__form form"
+      action="#" method="post"
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -59,14 +82,20 @@ function ReviewForm(props) {
           const keyValue = getOrderNumber();
           return (
             <React.Fragment key={keyValue}>
-              <input onChange={handleInputChange}
-                className="form__rating-input visually-hidden"
-                name="rating" value={`${array.length - index}`}
+              <input
+                onChange={handleInputChange}
+                value={`${array.length - index}`}
                 id={`${array.length - index}-stars`} type="radio"
                 checked={reviewValue.rating === (`${array.length - index}`) ? true : ''}
                 disabled={sendingStatus}
+                className="form__rating-input visually-hidden"
+                name="rating"
               />
-              <label htmlFor={`${array.length - index}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
+              <label
+                htmlFor={`${array.length - index}-stars`}
+                className="reviews__rating-label form__rating-label"
+                title="perfect"
+              >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
@@ -75,20 +104,30 @@ function ReviewForm(props) {
           );
         })}
       </div>
-      <textarea onChange={handleInputChange} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" disabled={sendingStatus} value={reviewValue.review}></textarea>
+      <textarea
+        onChange={handleInputChange}
+        className="reviews__textarea form__textarea"
+        id="review" name="review"
+        placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={sendingStatus}
+        value={reviewValue.review}
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button onClick={toggleSubmitButtonMode} className="reviews__submit form__submit button" type="submit" disabled={toggleSubmitButtonMode()}>Submit</button>
       </div>
+      {commentError && <p>{ERROR_MESSAGE}</p>}
     </form>
   );
 }
 
 ReviewForm.propTypes = {
   onSendReview: PropTypes.func.isRequired,
-  commentsLength: PropTypes.number.isRequired,
+  reviewsAmount: PropTypes.number.isRequired,
+  offerId: PropTypes.string.isRequired,
 };
 
 export default ReviewForm;

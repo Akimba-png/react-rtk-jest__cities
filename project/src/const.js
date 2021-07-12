@@ -31,7 +31,7 @@ export const propertyRoute = {
   },
   postComment(offerId) {
     return `/comments/${offerId}`;
-  }
+  },
 };
 
 export const ApiRoute = {

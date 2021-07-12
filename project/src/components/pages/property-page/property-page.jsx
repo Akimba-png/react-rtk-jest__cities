@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import LoadingPage from './../loading-page/loading-page';
@@ -10,18 +11,17 @@ import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
 import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
-import { propertyRoute, Index } from './../../../const';
+import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
 import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
 
 function PropertyPage(props) {
-  const { match } = props;
+  const { match, currentAuthorizationStatus } = props;
 
   const [propertyData, setPropertyData] = useState(null);
   const [errorStatus, setErrorStatus] = useState(null);
-  const [commentError, setCommentError] = useState(false);
   const offerId = match.params.id;
 
   useEffect(() => {
@@ -46,14 +46,10 @@ function PropertyPage(props) {
     return <LoadingPage />;
   }
 
-  const sendReview = ({ rating, review : comment }) => {
-    api.post(propertyRoute.postComment(offerId), { rating, comment })
-    .then(({data}) => data.map(adaptCommentToClient))
-    .then((comments) => {setPropertyData([...propertyData.slice(0, Index.THIRD), comments])})
-    // .catch(() => {
-    //   setCommentError(true);
-    //   setTimeout(() => setCommentError(false), 2000)
-    // })
+  const isAuthorized = currentAuthorizationStatus === AuthorizationStatus.AUTH;
+
+  const handleCommentChange = (comments) => {
+    setPropertyData([...propertyData.slice(0, Index.THIRD), comments]);
   };
 
   const [offer, nearbyOffers, reviews] = propertyData;
@@ -71,6 +67,8 @@ function PropertyPage(props) {
     host,
     description,
   } = offer;
+
+  const reviewsAmount = reviews.length;
 
   return (
     <div className="page">
@@ -169,9 +167,8 @@ function PropertyPage(props) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <ReviewsList reviews={reviews} />
-                <ReviewForm onSendReview={sendReview} commentsLength={propertyData[Index.THIRD].length}/>
-                {commentError && <p>Server isn`t available. Try again later</p>}
+                <ReviewsList reviews={reviews} reviewsAmount={reviewsAmount} />
+                {isAuthorized && <ReviewForm reviewsAmount={reviewsAmount} onSendReview={handleCommentChange} offerId={offerId} />}
               </section>
             </div>
           </div>
@@ -201,6 +198,12 @@ PropertyPage.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }),
+  currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
-export default PropertyPage;
+const mapStateToProps = (state) => ({
+  currentAuthorizationStatus: state.authorizationStatus,
+});
+
+export {PropertyPage};
+export default connect(mapStateToProps, null)(PropertyPage);
