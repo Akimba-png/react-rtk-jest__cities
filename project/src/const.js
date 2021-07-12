@@ -9,6 +9,7 @@ export const LOCATIONS = [
 
 export const Index = {
   FIRST: 1,
+  THIRD: 2,
 };
 
 export const AppRoute = {
@@ -28,6 +29,9 @@ export const propertyRoute = {
   getComment(offerId) {
     return `/comments/${offerId}`;
   },
+  postComment(offerId) {
+    return `/comments/${offerId}`;
+  }
 };
 
 export const ApiRoute = {

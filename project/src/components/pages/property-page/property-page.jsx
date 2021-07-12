@@ -10,7 +10,7 @@ import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
 import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
-import { propertyRoute } from './../../../const';
+import { propertyRoute, Index } from './../../../const';
 import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
@@ -21,6 +21,7 @@ function PropertyPage(props) {
 
   const [propertyData, setPropertyData] = useState(null);
   const [errorStatus, setErrorStatus] = useState(null);
+  const [commentError, setCommentError] = useState(false);
   const offerId = match.params.id;
 
   useEffect(() => {
@@ -44,6 +45,16 @@ function PropertyPage(props) {
   if (!propertyData) {
     return <LoadingPage />;
   }
+
+  const sendReview = ({ rating, review : comment }) => {
+    api.post(propertyRoute.postComment(offerId), { rating, comment })
+    .then(({data}) => data.map(adaptCommentToClient))
+    .then((comments) => {setPropertyData([...propertyData.slice(0, Index.THIRD), comments])})
+    // .catch(() => {
+    //   setCommentError(true);
+    //   setTimeout(() => setCommentError(false), 2000)
+    // })
+  };
 
   const [offer, nearbyOffers, reviews] = propertyData;
 
@@ -159,7 +170,8 @@ function PropertyPage(props) {
               </div>
               <section className="property__reviews reviews">
                 <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                <ReviewForm onSendReview={sendReview} commentsLength={propertyData[Index.THIRD].length}/>
+                {commentError && <p>Server isn`t available. Try again later</p>}
               </section>
             </div>
           </div>
