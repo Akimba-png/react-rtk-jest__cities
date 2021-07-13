@@ -1,26 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
+import LoadingPage from './../loading-page/loading-page';
+import NotFoundPage from './../not-found-page/not-found-page';
 import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
 import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
-import cardListProp from './../../cards/card-list/card-list.prop';
-import reviewsListProp from './../../reviews-list/reviews-list.prop';
-import { getFilteredOffers } from './../../../store/selectors';
 import { convertValueToShare } from './../../../utils/common';
+import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
+import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
+import { api } from './../../../store/store';
 
 const PLURAL_POSTFIX = 's';
-const NEARBY_OFFERS_NUMBER = 3;
+const NOT_FOUND_ERROR = 404;
 
 function PropertyPage(props) {
-  const { offers, reviews } = props;
-  const offer = offers.find((element) => element.id === parseFloat(props.match.params.id));
+  const { match, currentAuthorizationStatus } = props;
 
-  const getNearestNearbyOffers = (nearbyOffers) => nearbyOffers.slice(0, NEARBY_OFFERS_NUMBER);
-  const nearestNearbyOffers = getNearestNearbyOffers(offers);
+  const [propertyData, setPropertyData] = useState(null);
+  const [errorStatus, setErrorStatus] = useState(null);
+  const offerId = match.params.id;
+
+  useEffect(() => {
+    Promise.all([
+      api.get(propertyRoute.getOffer(offerId))
+        .then(({ data }) => adaptOfferToClient(data)),
+      api.get(propertyRoute.getOfferNearby(offerId))
+        .then(({ data }) => data.map(adaptOfferToClient)),
+      api.get(propertyRoute.getComment(offerId))
+        .then(({ data }) => data.map(adaptCommentToClient)),
+    ]).then((data) => setPropertyData(data))
+      .catch((error) => {
+        setErrorStatus(error.response.status);
+      });
+  }, [offerId]);
+
+  if (errorStatus === NOT_FOUND_ERROR) {
+    return <NotFoundPage />;
+  }
+
+  if (!propertyData) {
+    return <LoadingPage />;
+  }
+
+  const isAuthorized = currentAuthorizationStatus === AuthorizationStatus.AUTH;
+
+  const handleCommentChange = (comments) => {
+    setPropertyData([...propertyData.slice(0, Index.THIRD), comments]);
+  };
+
+  const [offer, nearbyOffers, reviews] = propertyData;
 
   const {
     images,
@@ -35,6 +67,8 @@ function PropertyPage(props) {
     host,
     description,
   } = offer;
+
+  const reviewsAmount = reviews.length;
 
   return (
     <div className="page">
@@ -130,26 +164,23 @@ function PropertyPage(props) {
                   <p className="property__text">
                     {description}
                   </p>
-                  <p className="property__text">
-                    {description}
-                  </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                <ReviewsList reviews={reviews} reviewsAmount={reviewsAmount} />
+                {isAuthorized && <ReviewForm reviewsAmount={reviewsAmount} onSendReview={handleCommentChange} offerId={offerId} />}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearestNearbyOffers} />
+            <Map offers={nearbyOffers} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <CardList offers={nearestNearbyOffers} />
+              <CardList offers={nearbyOffers} />
             </div>
           </section>
         </div>
@@ -159,7 +190,6 @@ function PropertyPage(props) {
 }
 
 PropertyPage.propTypes = {
-  offers: cardListProp,
   match: PropTypes.shape({
     isExact: PropTypes.bool,
     params: PropTypes.shape({
@@ -168,11 +198,11 @@ PropertyPage.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }),
-  reviews: reviewsListProp,
+  currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: getFilteredOffers(state),
+  currentAuthorizationStatus: state.authorizationStatus,
 });
 
 export {PropertyPage};

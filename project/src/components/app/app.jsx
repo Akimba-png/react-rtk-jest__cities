@@ -10,12 +10,11 @@ import FavoritesPage from './../pages/favorites-page/favorites-page';
 import PropertyPage from './../pages/property-page/property-page';
 import NotFoundPage from './../pages/not-found-page/not-found-page';
 import LoadingPage from './../pages/loading-page/loading-page';
-import reviewsListProp from './../reviews-list/reviews-list.prop.js';
-import { isAuthorizationStatusReceived } from './../../utils/common';
+import { isAuthorizationStatusReceived } from './../../utils/server';
 import browserHistory from './../../browser-history.js';
 
 function App(props) {
-  const { reviews, loadingStatus, currentAuthorizationStatus } = props;
+  const { loadingStatus, currentAuthorizationStatus } = props;
   if (!loadingStatus || !isAuthorizationStatusReceived(currentAuthorizationStatus)) {
     return (
       <LoadingPage />
@@ -39,7 +38,7 @@ function App(props) {
         </PrivateRoute>
         <Route
           exact path={AppRoute.PROPERTY}
-          render={(routerProps) => <PropertyPage reviews={reviews} {...routerProps} />}
+          render={(routerProps) => <PropertyPage {...routerProps} />}
         >
         </Route>
         <Route>
@@ -51,7 +50,6 @@ function App(props) {
 }
 
 App.propTypes = {
-  reviews: reviewsListProp,
   loadingStatus: PropTypes.bool,
   currentAuthorizationStatus: PropTypes.string.isRequired,
 };

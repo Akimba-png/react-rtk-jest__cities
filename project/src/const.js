@@ -9,6 +9,7 @@ export const LOCATIONS = [
 
 export const Index = {
   FIRST: 1,
+  THIRD: 2,
 };
 
 export const AppRoute = {
@@ -16,6 +17,21 @@ export const AppRoute = {
   LOGIN: '/login',
   FAVORITE: '/favorites',
   PROPERTY: '/offer/:id',
+};
+
+export const propertyRoute = {
+  getOffer(offerId) {
+    return `/hotels/${offerId}`;
+  },
+  getOfferNearby(offerId) {
+    return `/hotels/${offerId}/nearby`;
+  },
+  getComment(offerId) {
+    return `/comments/${offerId}`;
+  },
+  postComment(offerId) {
+    return `/comments/${offerId}`;
+  },
 };
 
 export const ApiRoute = {
