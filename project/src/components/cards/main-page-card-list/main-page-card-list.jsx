@@ -21,8 +21,8 @@ MainPageCardList.propTypes = {
   resetActiveCardId: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  offers: getFilteredOffers(state),
+const mapStateToProps = ({DATA, INTERACTION}) => ({
+  offers: getFilteredOffers(DATA, INTERACTION),
 });
 
 const mapDispatchToProps = (dispatch) => ({

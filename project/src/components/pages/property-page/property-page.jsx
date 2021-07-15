@@ -201,8 +201,8 @@ PropertyPage.propTypes = {
   currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currentAuthorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({USER}) => ({
+  currentAuthorizationStatus: USER.authorizationStatus,
 });
 
 export {PropertyPage};

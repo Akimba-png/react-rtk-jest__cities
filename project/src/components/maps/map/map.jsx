@@ -84,8 +84,8 @@ Map.propTypes = {
   activeCardId: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  activeCardId: state.activeCardId,
+const mapStateToProps = ({INTERACTION}) => ({
+  activeCardId: INTERACTION.activeCardId,
 });
 
 export {Map};

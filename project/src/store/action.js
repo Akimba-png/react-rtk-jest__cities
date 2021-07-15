@@ -1,12 +1,11 @@
 export const ActionType = {
-  CHANGE_CITY: 'locationList/changeCity',
-  CHANGE_SORTIG: 'sorting/changeSorting',
-  CHANGE_ACTIVE_CARD_ID: 'mainCard/changeActiveCardId',
+  CHANGE_CITY: 'appInterection/changeCity',
+  CHANGE_SORTIG: 'appInterection/changeSorting',
+  CHANGE_ACTIVE_CARD_ID: 'appInterection/changeActiveCardId',
   LOAD_OFFERS: 'data/loadOffers',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT: 'app/redirect',
-
+  REDIRECT: 'appInterection/redirect',
 };
 
 export const changeCity = (city) => ({

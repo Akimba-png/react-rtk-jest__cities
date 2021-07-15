@@ -60,8 +60,8 @@ Sorting.propTypes = {
   onChangeSorting: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
+const mapStateToProps = ({INTERACTION}) => ({
+  sortType: INTERACTION.sortType,
 });
 
 const mapDispatchToProps = (dispatch) => ({

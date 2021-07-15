@@ -19,9 +19,9 @@ CardListTitle.propTypes = {
   offers: cardListProp,
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: getFilteredOffers(state),
+const mapStateToProps = ({DATA, INTERACTION}) => ({
+  city: INTERACTION.city,
+  offers: getFilteredOffers(DATA, INTERACTION),
 });
 
 export { CardListTitle };

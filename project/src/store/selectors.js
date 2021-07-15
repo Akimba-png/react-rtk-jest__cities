@@ -1,10 +1,10 @@
 import { SortOption } from './../utils/common';
 import { SortValue } from './../const';
 
-export const getFilteredOffers = (state) => {
-  const filteredOffers = state.offers.filter((offer) => offer.city.name === state.city);
+export const getFilteredOffers = (dataStore, interactionStore) => {
+  const filteredOffers = dataStore.offers.filter((offer) => offer.city.name === interactionStore.city);
 
-  switch (state.sortType) {
+  switch (interactionStore.sortType) {
     case SortValue.PRICE_TO_HIGH:
       return filteredOffers.slice().sort(SortOption.priceToHigh);
     case SortValue.PRICE_TO_LOW:

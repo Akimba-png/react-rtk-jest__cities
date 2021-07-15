@@ -31,8 +31,8 @@ LocationList.propTypes = {
   onChangeCity: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
-  city: state.city,
+const mapStateToProps = ({INTERACTION}) => ({
+  city: INTERACTION.city,
 });
 
 const mapDispatchToProps = (dispatch) => ({

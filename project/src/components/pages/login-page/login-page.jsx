@@ -78,8 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const mapStateToProps = (state) => ({
-  currentAuthorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({USER}) => ({
+  currentAuthorizationStatus: USER.authorizationStatus,
 });
 
 export { LoginPage };

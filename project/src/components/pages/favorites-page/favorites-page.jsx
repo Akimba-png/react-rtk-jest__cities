@@ -56,8 +56,8 @@ FavoritesPage.propTypes = {
   offers: cardListProp,
 };
 
-const mapStateToProps = (state) => ({
-  offers: state.offers,
+const mapStateToProps = ({DATA}) => ({
+  offers: DATA.offers,
 });
 
 export { FavoritesPage };
