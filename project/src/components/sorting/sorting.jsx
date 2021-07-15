@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActionCreator } from './../../store/action';
+import { changeSorting } from './../../store/action';
 import { SortValue } from './../../const';
 
 function Sorting(props) {
-  const { sortType, changeSorting } = props;
+  const { sortType, onChangeSorting } = props;
   const [sortWindowMode, setSortWindowMode] = useState('');
 
   const toggleSortWindowMode = () => {
@@ -18,7 +18,7 @@ function Sorting(props) {
 
   const handleSortItemClick = (item) =>
     () => {
-      changeSorting(item);
+      onChangeSorting(item);
       toggleSortWindowMode();
     };
 
@@ -57,7 +57,7 @@ function Sorting(props) {
 
 Sorting.propTypes = {
   sortType: PropTypes.string.isRequired,
-  changeSorting: PropTypes.func.isRequired,
+  onChangeSorting: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -65,8 +65,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeSorting(sortValue) {
-    dispatch(ActionCreator.changeSorting(sortValue));
+  onChangeSorting(sortValue) {
+    dispatch(changeSorting(sortValue));
   },
 });
 

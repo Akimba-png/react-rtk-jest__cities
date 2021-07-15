@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ActionCreator } from './../../store/action';
+import { changeCity } from './../../store/action';
 import { LOCATIONS } from './../../const';
 
 
 function LocationList(props) {
-  const { city, changeCity } = props;
+  const { city, onChangeCity } = props;
 
-  const handleLinkClick = (location) => () => changeCity(location);
+  const handleLinkClick = (location) => () => onChangeCity(location);
 
   return (
     <ul className="locations__list tabs__list">
@@ -28,7 +28,7 @@ function LocationList(props) {
 
 LocationList.propTypes = {
   city: PropTypes.string,
-  changeCity: PropTypes.func,
+  onChangeCity: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+  onChangeCity(city) {
+    dispatch(changeCity(city));
   },
 });
 

@@ -4,7 +4,7 @@ import cardListProp from './../card-list/card-list.prop';
 import CardList from './../../cards/card-list/card-list';
 import { connect } from 'react-redux';
 import { getFilteredOffers } from './../../../store/selectors';
-import { ActionCreator } from './../../../store/action';
+import { changeActiveCardId } from './../../../store/action';
 import { CardCssValue } from './../../../const';
 
 function MainPageCardList(props) {
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   resetActiveCardId() {
-    dispatch(ActionCreator.changeActiveCardId(null));
+    dispatch(changeActiveCardId(null));
   },
 });
 

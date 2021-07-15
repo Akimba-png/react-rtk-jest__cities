@@ -16,7 +16,7 @@ const DefaultStyle = {
 };
 
 function Card(props) {
-  const { offer, cssValue = DefaultStyle, changeActiveCardId } = props;
+  const { offer, cssValue = DefaultStyle, onChangeActiveCardId } = props;
 
   const {
     isPremium,
@@ -38,7 +38,7 @@ function Card(props) {
 
   const hanldeActiveCardIdOnMouseOver = (evt) => {
     if (cssValue.TYPE === CardCssValue.Main.TYPE) {
-      changeActiveCardId(offer.id);
+      onChangeActiveCardId(offer.id);
     }
   };
 
@@ -82,7 +82,7 @@ function Card(props) {
 
 Card.propTypes = {
   offer: cardOfferProp,
-  changeActiveCardId: PropTypes.func,
+  onChangeActiveCardId: PropTypes.func,
   cssValue: cardCssValueProp,
 };
 

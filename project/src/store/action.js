@@ -9,32 +9,36 @@ export const ActionType = {
 
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  changeSorting: (sortType) => ({
-    type: ActionType.CHANGE_SORTIG,
-    payload: sortType,
-  }),
-  changeActiveCardId: (cardId) => ({
-    type: ActionType.CHANGE_ACTIVE_CARD_ID,
-    payload: cardId,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRE_AUTHORIZATION,
-    payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirect: (url) => ({
-    type: ActionType.REDIRECT,
-    payload: url,
-  }),
-};
+export const changeCity = (city) => ({
+  type: ActionType.CHANGE_CITY,
+  payload: city,
+});
+
+export const changeSorting = (sortType) => ({
+  type: ActionType.CHANGE_SORTIG,
+  payload: sortType,
+});
+
+export const changeActiveCardId = (cardId) => ({
+  type: ActionType.CHANGE_ACTIVE_CARD_ID,
+  payload: cardId,
+});
+
+export const loadOffers = (offers) => ({
+  type: ActionType.LOAD_OFFERS,
+  payload: offers,
+});
+
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRE_AUTHORIZATION,
+  payload: status,
+});
+
+export const logout = () => ({
+  type: ActionType.LOGOUT,
+});
+
+export const redirect = (url) => ({
+  type: ActionType.REDIRECT,
+  payload: url,
+});
