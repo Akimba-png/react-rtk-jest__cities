@@ -13,6 +13,7 @@ import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
 import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
 import { api } from './../../../store/store';
+import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
@@ -201,8 +202,8 @@ PropertyPage.propTypes = {
   currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  currentAuthorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  currentAuthorizationStatus: getAuthorizationStatus(state),
 });
 
 export {PropertyPage};

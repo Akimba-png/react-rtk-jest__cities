@@ -16,8 +16,8 @@ MainPageMap.propTypes = {
   offers: cardListProp,
 };
 
-const mapStateToProps = ({DATA, INTERACTION}) => ({
-  offers: getFilteredOffers(DATA, INTERACTION),
+const mapStateToProps = (state) => ({
+  offers: getFilteredOffers(state),
 });
 
 export { MainPageMap };

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import cardListProp from './../card-list/card-list.prop';
 import { getFilteredOffers } from './../../../store/selectors';
 import {Index} from './../../../const';
+import { getActiveCity } from './../../../store/app-interection/selectors';
 
 function CardListTitle(props) {
   const {city, offers} = props;
@@ -19,9 +20,9 @@ CardListTitle.propTypes = {
   offers: cardListProp,
 };
 
-const mapStateToProps = ({DATA, INTERACTION}) => ({
-  city: INTERACTION.city,
-  offers: getFilteredOffers(DATA, INTERACTION),
+const mapStateToProps = (state) => ({
+  city: getActiveCity(state),
+  offers: getFilteredOffers(state),
 });
 
 export { CardListTitle };

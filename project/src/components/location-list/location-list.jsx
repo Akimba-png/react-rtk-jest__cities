@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeCity } from './../../store/action';
 import { LOCATIONS } from './../../const';
+import { getActiveCity } from './../../store/app-interection/selectors';
 
 
 function LocationList(props) {
@@ -31,8 +32,8 @@ LocationList.propTypes = {
   onChangeCity: PropTypes.func,
 };
 
-const mapStateToProps = ({INTERACTION}) => ({
-  city: INTERACTION.city,
+const mapStateToProps = (state) => ({
+  city: getActiveCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,6 +7,7 @@ import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import { login } from './../../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from './../../../const';
+import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const VALIDITY_MESSAGE = 'Это небезопасный пароль, добавьте символ отличный от пробела';
 
@@ -72,14 +73,14 @@ LoginPage.propTypes = {
   currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  currentAuthorizationStatus: getAuthorizationStatus(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onFormSubmit(formValue) {
     dispatch(login(formValue));
   },
-});
-
-const mapStateToProps = ({USER}) => ({
-  currentAuthorizationStatus: USER.authorizationStatus,
 });
 
 export { LoginPage };

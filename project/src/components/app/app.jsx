@@ -12,6 +12,8 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import LoadingPage from './../pages/loading-page/loading-page';
 import { isAuthorizationStatusReceived } from './../../utils/server';
 import browserHistory from './../../browser-history.js';
+import { getDataLoadedStatus } from './../../store/app-data/selectors.js';
+import { getAuthorizationStatus } from './../../store/user/selectors.js';
 
 function App(props) {
   const { loadingStatus, currentAuthorizationStatus } = props;
@@ -54,9 +56,9 @@ App.propTypes = {
   currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  loadingStatus: DATA.isDataLoaded,
-  currentAuthorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  loadingStatus: getDataLoadedStatus(state),
+  currentAuthorizationStatus: getAuthorizationStatus(state),
 });
 
 export { App };

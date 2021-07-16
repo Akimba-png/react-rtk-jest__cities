@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import useMap from './../../../hooks/useMap';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
+import { getActiveCardId } from './../../../store/app-interection/selectors';
 
 const FIRST_ELEMENT_ARRAY_INDEX = 0;
 
@@ -84,8 +85,8 @@ Map.propTypes = {
   activeCardId: PropTypes.number,
 };
 
-const mapStateToProps = ({INTERACTION}) => ({
-  activeCardId: INTERACTION.activeCardId,
+const mapStateToProps = (state) => ({
+  activeCardId: getActiveCardId(state),
 });
 
 export {Map};

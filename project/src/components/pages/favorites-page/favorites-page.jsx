@@ -6,6 +6,7 @@ import Navigation from './../../navigation/navigation';
 import CardList from '../../cards/card-list/card-list';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import { AppRoute, CardCssValue } from './../../../const';
+import { getOffers } from './../../../store/app-data/selectors';
 
 function FavoritesPage(props) {
   const { offers } = props;
@@ -56,8 +57,8 @@ FavoritesPage.propTypes = {
   offers: cardListProp,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  offers: DATA.offers,
+const mapStateToProps = (state) => ({
+  offers: getOffers(state),
 });
 
 export { FavoritesPage };
