@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import cardListProp from './../card-list/card-list.prop';
 import { getFilteredOffers } from './../../../store/selectors';
 import {Index} from './../../../const';
-import { getActiveCity } from './../../../store/app-interection/selectors';
+import { getActiveCity } from './../../../store/app-interaction/selectors';
 
 function CardListTitle(props) {
   const {city, offers} = props;

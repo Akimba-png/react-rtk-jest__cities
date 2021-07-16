@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import useMap from './../../../hooks/useMap';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
-import { getActiveCardId } from './../../../store/app-interection/selectors';
+import { getActiveCardId } from './../../../store/app-interaction/selectors';
 
 const FIRST_ELEMENT_ARRAY_INDEX = 0;
 

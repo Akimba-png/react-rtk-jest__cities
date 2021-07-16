@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { appData } from './app-data/app-data';
 import { user } from './user/user';
-import { appInterection } from './app-interection/app-interection';
+import { appInteraction } from './app-interaction/app-interaction';
 
 export const NameSpace = {
   DATA: 'DATA',
@@ -11,6 +11,6 @@ export const NameSpace = {
 
 export default combineReducers({
   [NameSpace.DATA]: appData,
-  [NameSpace.INTERACTION]: appInterection,
+  [NameSpace.INTERACTION]: appInteraction,
   [NameSpace.USER]: user,
 });

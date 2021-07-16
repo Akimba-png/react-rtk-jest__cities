@@ -2,8 +2,8 @@ import { SortOption } from './../utils/common';
 import { SortValue } from './../const';
 import { createSelector } from 'reselect';
 import { getOffers } from './app-data/selectors';
-import { getActiveCity } from './app-interection/selectors';
-import { getActiveSortType } from './app-interection/selectors';
+import { getActiveCity } from './app-interaction/selectors';
+import { getActiveSortType } from './app-interaction/selectors';
 
 export const getFilteredOffers = createSelector(
   [getOffers, getActiveCity, getActiveSortType],

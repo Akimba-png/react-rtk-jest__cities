@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeSorting } from './../../store/action';
 import { SortValue } from './../../const';
-import { getActiveSortType } from './../../store/app-interection/selectors';
+import { getActiveSortType } from './../../store/app-interaction/selectors';
 
 function Sorting(props) {
   const { sortType, onChangeSorting } = props;

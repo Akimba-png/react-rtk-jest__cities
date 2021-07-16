@@ -1,43 +1,43 @@
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
-  CHANGE_CITY: 'appInterection/changeCity',
-  CHANGE_SORTIG: 'appInterection/changeSorting',
-  CHANGE_ACTIVE_CARD_ID: 'appInterection/changeActiveCardId',
+  CHANGE_CITY: 'appInteraction/changeCity',
+  CHANGE_SORTIG: 'appInteraction/changeSorting',
+  CHANGE_ACTIVE_CARD_ID: 'appInteraction/changeActiveCardId',
   LOAD_OFFERS: 'data/loadOffers',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT: 'appInterection/redirect',
+  REDIRECT: 'appInteraction/redirect',
 };
 
-export const changeCity = (city) => ({
-  type: ActionType.CHANGE_CITY,
-  payload: city,
-});
+export const changeCity =
+  createAction(ActionType.CHANGE_CITY, (city) => ({
+    payload: city,
+  }));
 
-export const changeSorting = (sortType) => ({
-  type: ActionType.CHANGE_SORTIG,
-  payload: sortType,
-});
+export const changeSorting =
+  createAction(ActionType.CHANGE_SORTIG, (sortType) => ({
+    payload: sortType,
+  }));
 
-export const changeActiveCardId = (cardId) => ({
-  type: ActionType.CHANGE_ACTIVE_CARD_ID,
-  payload: cardId,
-});
+export const changeActiveCardId =
+  createAction(ActionType.CHANGE_ACTIVE_CARD_ID, (cardId) => ({
+    payload: cardId,
+  }));
 
-export const loadOffers = (offers) => ({
-  type: ActionType.LOAD_OFFERS,
-  payload: offers,
-});
+export const loadOffers =
+  createAction(ActionType.LOAD_OFFERS, (offers) => ({
+    payload: offers,
+  }));
 
-export const requireAuthorization = (status) => ({
-  type: ActionType.REQUIRE_AUTHORIZATION,
-  payload: status,
-});
+export const requireAuthorization =
+  createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => ({
+    payload: status,
+  }));
 
-export const logout = () => ({
-  type: ActionType.LOGOUT,
-});
+export const logout = createAction(ActionType.LOGOUT);
 
-export const redirect = (url) => ({
-  type: ActionType.REDIRECT,
+export const redirect =
+createAction(ActionType.REDIRECT, (url) => ({
   payload: url,
-});
+}));

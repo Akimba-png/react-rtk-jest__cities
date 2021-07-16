@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeCity } from './../../store/action';
 import { LOCATIONS } from './../../const';
-import { getActiveCity } from './../../store/app-interection/selectors';
+import { getActiveCity } from './../../store/app-interaction/selectors';
 
 
 function LocationList(props) {
