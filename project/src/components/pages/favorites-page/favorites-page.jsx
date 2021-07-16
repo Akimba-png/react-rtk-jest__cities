@@ -1,16 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Logo from '../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import CardList from '../../cards/card-list/card-list';
-import cardListProp from './../../cards/card-list/card-list.prop';
 import { AppRoute, CardCssValue } from './../../../const';
-import { getOffers } from './../../../store/app-data/selectors';
+import { getFavoriteOffers } from './../../../store/selectors';
 
-function FavoritesPage(props) {
-  const { offers } = props;
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+function FavoritesPage() {
+  const favoriteOffers = useSelector(getFavoriteOffers);
 
   return (
     <div className="page">
@@ -53,13 +51,4 @@ function FavoritesPage(props) {
   );
 }
 
-FavoritesPage.propTypes = {
-  offers: cardListProp,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getOffers(state),
-});
-
-export { FavoritesPage };
-export default connect(mapStateToProps, null)(FavoritesPage);
+export default FavoritesPage;

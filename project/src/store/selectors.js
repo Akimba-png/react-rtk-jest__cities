@@ -22,3 +22,7 @@ export const getFilteredOffers = createSelector(
     }
   },
 );
+
+export const getFavoriteOffers = createSelector(
+  [getOffers], (offers) => offers.filter((offer) => offer.isFavorite),
+);
