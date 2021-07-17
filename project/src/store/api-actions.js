@@ -1,11 +1,24 @@
 import { loadOffers, requireAuthorization, logout as closeSession, redirect } from './action';
-import { ApiRoute, AuthorizationStatus, AppRoute } from './../const';
+import { ApiRoute, favoriteRoute, AuthorizationStatus, AppRoute, Index } from './../const';
 import { adaptOfferToClient, adaptUserDataToClient } from './../utils/server';
 
 export const fetchOffersList = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.OFFERS)
     .then(({ data }) => data.map(adaptOfferToClient))
     .then((offers) => dispatch(loadOffers(offers)));
+
+export const setFavoriteStatus = (offerId, status) => (dispatch, getState, api) =>
+  api.post(favoriteRoute.postFavoriteStatus(offerId, status))
+    .then(({ data }) => adaptOfferToClient(data))
+    .then((offer) => {
+      const offers = getState().DATA.offers;
+      const updatedOffers = [
+        ...offers.slice(0, offerId - Index.FIRST),
+        offer,
+        ...offers.slice(offerId, offerId.length),
+      ];
+      dispatch(loadOffers(updatedOffers));
+    });
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.LOGIN)

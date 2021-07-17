@@ -34,6 +34,12 @@ export const propertyRoute = {
   },
 };
 
+export const favoriteRoute = {
+  postFavoriteStatus(offerId, status) {
+    return `/favorite/${offerId}/${status}`;
+  },
+};
+
 export const ApiRoute = {
   OFFERS: '/hotels',
   LOGIN: '/login',

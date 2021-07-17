@@ -9,6 +9,7 @@ import ReviewsList from './../../reviews-list/reviews-list';
 import ReviewForm from './../../review-form/review-form';
 import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
+import FavoriteButton from './../../favorite-button/favorite-button';
 import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
 import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
@@ -17,6 +18,14 @@ import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
+
+const FavoriteButtonCssValue = {
+  BUTTON_CLASS_NAME: 'property__bookmark-button',
+  BUTTON_CLASS_NAME_ACTIVE: 'property__bookmark-button--active',
+  SVG_CLASS_NAME: 'property__bookmark-icon',
+  SVG_WIDTH: '31',
+  SVG_HEIGHT: '33',
+};
 
 function PropertyPage({match}) {
   const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
@@ -55,7 +64,9 @@ function PropertyPage({match}) {
   const [offer, nearbyOffers, reviews] = propertyData;
 
   const {
+    id,
     images,
+    isFavorite,
     isPremium,
     title,
     rating,
@@ -102,12 +113,7 @@ function PropertyPage({match}) {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton favoriteStatus={isFavorite} offerId={id} cssValue={FavoriteButtonCssValue} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import FavoriteButton from './../../favorite-button/favorite-button';
 import cardOfferProp from './card-offer.prop';
 import cardCssValueProp from './card-css-value.prop';
 import { convertValueToShare } from './../../../utils/common';
@@ -19,6 +20,7 @@ function Card(props) {
   const { offer, cssValue = DefaultStyle, onChangeActiveCardId } = props;
 
   const {
+    id,
     isPremium,
     previewImage,
     price,
@@ -58,12 +60,7 @@ function Card(props) {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
-          </button>
+          <FavoriteButton favoriteStatus={isFavorite} offerId={id} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
