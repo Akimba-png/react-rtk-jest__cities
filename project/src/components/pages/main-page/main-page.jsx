@@ -1,22 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../logo/logo';
-import CardListTitle from './../../cards/card-list-title/card-list-title';
-import MainPageMap from './../../maps/main-page-map/main-page-map';
-import MainPageCardList from './../../cards/main-page-card-list/main-page-card-list';
 import LocationList from './../../location-list/location-list';
-import Sorting from './../../sorting/sorting';
 import Navigation from './../../navigation/navigation';
-import MainPageEmpty from './../../main-page-empty/main-page-empty';
-import { useSelector } from 'react-redux';
-import { getFilteredOffers } from '../../../store/selectors';
+import MainPageContainer from './../../main-page-container/main-page-container';
 
 const LOGO_ACTIVE_MODE = true;
 
 function MainPage() {
-  const isCityOffersAvailable = useSelector(getFilteredOffers).length !== 0;
-
+  const [cityOffersUnavailable, setCityOffersUnavailable] = useState(false);
   return (
-    <div className={`page page--gray page--main ${!isCityOffersAvailable ? 'page__main--index-empty' : ''}`}>
+    <div className={`page page--gray page--main ${cityOffersUnavailable ? 'page__main--index-empty' : ''}`}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -34,20 +27,7 @@ function MainPage() {
           </section>
         </div>
         <div className="cities">
-          {!isCityOffersAvailable ? <MainPageEmpty /> :
-            <div className="cities__places-container container">
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <CardListTitle />
-                <Sorting />
-                <MainPageCardList />
-              </section>
-              <div className="cities__right-section">
-                <section className="cities__map map">
-                  <MainPageMap />
-                </section>
-              </div>
-            </div>}
+          <MainPageContainer onOffersUnavailable={setCityOffersUnavailable} />
         </div>
       </main>
     </div>
@@ -55,3 +35,4 @@ function MainPage() {
 }
 
 export default MainPage;
+
