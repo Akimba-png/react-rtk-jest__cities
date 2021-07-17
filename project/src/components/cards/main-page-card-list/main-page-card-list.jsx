@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cardListProp from './../card-list/card-list.prop';
 import CardList from './../../cards/card-list/card-list';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getFilteredOffers } from './../../../store/selectors';
-import { ActionCreator } from './../../../store/action';
+import { changeActiveCardId } from './../../../store/action';
 import { CardCssValue } from './../../../const';
 
-function MainPageCardList(props) {
-  const { offers, resetActiveCardId } = props;
+function MainPageCardList() {
+  const offers = useSelector(getFilteredOffers);
+  const dispatch = useDispatch();
+  const resetActiveCardId = () => dispatch(changeActiveCardId(null));
+
   return (
     <div onMouseLeave={resetActiveCardId} className="cities__places-list places__list tabs__content">
       <CardList offers={offers} cardMode={CardCssValue.Main} />
@@ -16,20 +17,4 @@ function MainPageCardList(props) {
   );
 }
 
-MainPageCardList.propTypes = {
-  offers: cardListProp,
-  resetActiveCardId: PropTypes.func,
-};
-
-const mapStateToProps = (state) => ({
-  offers: getFilteredOffers(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  resetActiveCardId() {
-    dispatch(ActionCreator.changeActiveCardId(null));
-  },
-});
-
-export { MainPageCardList };
-export default connect(mapStateToProps, mapDispatchToProps)(MainPageCardList);
+export default MainPageCardList;

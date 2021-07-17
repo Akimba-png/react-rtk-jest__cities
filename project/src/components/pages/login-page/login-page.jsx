@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import { login } from './../../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from './../../../const';
+import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const VALIDITY_MESSAGE = 'Это небезопасный пароль, добавьте символ отличный от пробела';
 
-function LoginPage(props) {
-  const { onFormSubmit, currentAuthorizationStatus } = props;
+function LoginPage() {
+  const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
   if (currentAuthorizationStatus === AuthorizationStatus.AUTH) {
@@ -23,7 +24,7 @@ function LoginPage(props) {
       email: getValues().email,
       password: getValues().password,
     };
-    onFormSubmit(formValue);
+    dispatch(login(formValue));
   };
 
   return (
@@ -67,20 +68,4 @@ function LoginPage(props) {
   );
 }
 
-LoginPage.propTypes = {
-  onFormSubmit: PropTypes.func.isRequired,
-  currentAuthorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onFormSubmit(formValue) {
-    dispatch(login(formValue));
-  },
-});
-
-const mapStateToProps = (state) => ({
-  currentAuthorizationStatus: state.authorizationStatus,
-});
-
-export { LoginPage };
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

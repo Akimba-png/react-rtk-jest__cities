@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import LoadingPage from './../loading-page/loading-page';
@@ -13,13 +13,13 @@ import { convertValueToShare } from './../../../utils/common';
 import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
 import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
 import { api } from './../../../store/store';
+import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
 
-function PropertyPage(props) {
-  const { match, currentAuthorizationStatus } = props;
-
+function PropertyPage({match}) {
+  const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
   const [propertyData, setPropertyData] = useState(null);
   const [errorStatus, setErrorStatus] = useState(null);
   const offerId = match.params.id;
@@ -198,12 +198,6 @@ PropertyPage.propTypes = {
     path: PropTypes.string,
     url: PropTypes.string,
   }),
-  currentAuthorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currentAuthorizationStatus: state.authorizationStatus,
-});
-
-export {PropertyPage};
-export default connect(mapStateToProps, null)(PropertyPage);
+export default PropertyPage;

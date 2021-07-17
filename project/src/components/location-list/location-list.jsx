@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { ActionCreator } from './../../store/action';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeCity } from './../../store/action';
 import { LOCATIONS } from './../../const';
+import { getActiveCity } from './../../store/app-interaction/selectors';
 
+function LocationList() {
+  const city = useSelector(getActiveCity);
+  const dispatch = useDispatch();
 
-function LocationList(props) {
-  const { city, changeCity } = props;
-
-  const handleLinkClick = (location) => () => changeCity(location);
+  const handleLinkClick = (location) =>
+    () => dispatch(changeCity(location));
 
   return (
     <ul className="locations__list tabs__list">
@@ -26,20 +27,4 @@ function LocationList(props) {
   );
 }
 
-LocationList.propTypes = {
-  city: PropTypes.string,
-  changeCity: PropTypes.func,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
-  },
-});
-
-export { LocationList };
-export default connect(mapStateToProps, mapDispatchToProps)(LocationList);
+export default LocationList;

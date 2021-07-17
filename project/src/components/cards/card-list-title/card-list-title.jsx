@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import cardListProp from './../card-list/card-list.prop';
+import { useSelector } from 'react-redux';
 import { getFilteredOffers } from './../../../store/selectors';
 import {Index} from './../../../const';
+import { getActiveCity } from './../../../store/app-interaction/selectors';
 
-function CardListTitle(props) {
-  const {city, offers} = props;
+function CardListTitle() {
+  const city = useSelector(getActiveCity);
+  const offers = useSelector(getFilteredOffers);
   const offerNumber = offers.length;
 
   return (
@@ -14,15 +14,4 @@ function CardListTitle(props) {
   );
 }
 
-CardListTitle.propTypes = {
-  city: PropTypes.string,
-  offers: cardListProp,
-};
-
-const mapStateToProps = (state) => ({
-  city: state.city,
-  offers: getFilteredOffers(state),
-});
-
-export { CardListTitle };
-export default connect(mapStateToProps, null)(CardListTitle);
+export default CardListTitle;

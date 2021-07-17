@@ -27,9 +27,12 @@ function ReviewForm(props) {
   const [commentError, setCommentError] = useState(false);
 
   useEffect(() => {
-    setReviewValue(INITIAL_VALUE);
+    let cleanUpFunction = false;
+    if (!cleanUpFunction) {
+      setReviewValue(INITIAL_VALUE);
+    }
+    return () => cleanUpFunction = true;
   }, [reviewsAmount]);
-
 
   const handleInputChange = (evt) => {
     const { name, value } = evt.target;

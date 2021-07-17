@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router as BrowserRouter, Switch, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppRoute } from './../../const.js';
 import PrivateRoute from './../private-route/private-route';
 import MainPage from './../pages/main-page/main-page';
@@ -12,9 +11,14 @@ import NotFoundPage from './../pages/not-found-page/not-found-page';
 import LoadingPage from './../pages/loading-page/loading-page';
 import { isAuthorizationStatusReceived } from './../../utils/server';
 import browserHistory from './../../browser-history.js';
+import { getDataLoadedStatus } from './../../store/app-data/selectors.js';
+import { getAuthorizationStatus } from './../../store/user/selectors.js';
 
-function App(props) {
-  const { loadingStatus, currentAuthorizationStatus } = props;
+function App() {
+
+  const loadingStatus = useSelector(getDataLoadedStatus);
+  const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
+
   if (!loadingStatus || !isAuthorizationStatusReceived(currentAuthorizationStatus)) {
     return (
       <LoadingPage />
@@ -49,15 +53,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  loadingStatus: PropTypes.bool,
-  currentAuthorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  loadingStatus: state.isDataLoaded,
-  currentAuthorizationStatus: state.authorizationStatus,
-});
-
-export { App };
-export default connect(mapStateToProps, null)(App);
+export default App;

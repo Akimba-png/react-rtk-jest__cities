@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { logout } from './../../store/api-actions';
+import { getAuthorizationStatus } from './../../store/user/selectors';
 import { AuthorizationStatus, ApiRoute, AppRoute } from './../../const';
 
-const createNavigationTemplate = (authorizationStatus, signOut) => {
+function Navigation() {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
 
@@ -17,7 +19,7 @@ const createNavigationTemplate = (authorizationStatus, signOut) => {
 
     const handleSignOutButton = (evt) => {
       evt.preventDefault();
-      signOut();
+      dispatch(logout());
     };
 
     return (
@@ -52,28 +54,6 @@ const createNavigationTemplate = (authorizationStatus, signOut) => {
       </ul>
     </nav>
   );
-};
-
-
-function Navigation(props) {
-  const { authorizationStatus, signOut } = props;
-  return createNavigationTemplate(authorizationStatus, signOut);
 }
 
-Navigation.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  signOut: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  signOut() {
-    dispatch(logout());
-  },
-});
-
-export { Navigation };
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default Navigation;

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useMap from './../../../hooks/useMap';
 import cardListProp from './../../cards/card-list/card-list.prop';
 import leaflet from 'leaflet';
+import { getActiveCardId } from './../../../store/app-interaction/selectors';
 
 const FIRST_ELEMENT_ARRAY_INDEX = 0;
 
@@ -20,7 +20,8 @@ const MapIcon = {
 };
 
 function Map(props) {
-  const { offers, activeCardId } = props;
+  const { offers } = props;
+  const activeCardId = useSelector(getActiveCardId);
 
   let mapValue;
   if (offers.length !== 0) {
@@ -81,12 +82,6 @@ function Map(props) {
 
 Map.propTypes = {
   offers: cardListProp,
-  activeCardId: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  activeCardId: state.activeCardId,
-});
-
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;

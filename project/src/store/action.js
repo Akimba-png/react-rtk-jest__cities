@@ -1,40 +1,43 @@
+import { createAction } from '@reduxjs/toolkit';
+
 export const ActionType = {
-  CHANGE_CITY: 'locationList/changeCity',
-  CHANGE_SORTIG: 'sorting/changeSorting',
-  CHANGE_ACTIVE_CARD_ID: 'mainCard/changeActiveCardId',
+  CHANGE_CITY: 'appInteraction/changeCity',
+  CHANGE_SORTIG: 'appInteraction/changeSorting',
+  CHANGE_ACTIVE_CARD_ID: 'appInteraction/changeActiveCardId',
   LOAD_OFFERS: 'data/loadOffers',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT: 'app/redirect',
-
+  REDIRECT: 'appInteraction/redirect',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
+export const changeCity =
+  createAction(ActionType.CHANGE_CITY, (city) => ({
     payload: city,
-  }),
-  changeSorting: (sortType) => ({
-    type: ActionType.CHANGE_SORTIG,
+  }));
+
+export const changeSorting =
+  createAction(ActionType.CHANGE_SORTIG, (sortType) => ({
     payload: sortType,
-  }),
-  changeActiveCardId: (cardId) => ({
-    type: ActionType.CHANGE_ACTIVE_CARD_ID,
+  }));
+
+export const changeActiveCardId =
+  createAction(ActionType.CHANGE_ACTIVE_CARD_ID, (cardId) => ({
     payload: cardId,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
+  }));
+
+export const loadOffers =
+  createAction(ActionType.LOAD_OFFERS, (offers) => ({
     payload: offers,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRE_AUTHORIZATION,
+  }));
+
+export const requireAuthorization =
+  createAction(ActionType.REQUIRE_AUTHORIZATION, (status) => ({
     payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirect: (url) => ({
-    type: ActionType.REDIRECT,
-    payload: url,
-  }),
-};
+  }));
+
+export const logout = createAction(ActionType.LOGOUT);
+
+export const redirect =
+createAction(ActionType.REDIRECT, (url) => ({
+  payload: url,
+}));
