@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import useMap from './../../../hooks/useMap';
 import cardListProp from './../../cards/card-list/card-list.prop';
@@ -20,7 +21,7 @@ const MapIcon = {
 };
 
 function Map(props) {
-  const { offers } = props;
+  const { offers, activeOfferId } = props;
   const activeCardId = useSelector(getActiveCardId);
 
   let mapValue;
@@ -59,7 +60,7 @@ function Map(props) {
       map.setView(mapValue.cityCoordinates, mapValue.zoom);
       layerGroup = leaflet.layerGroup().addTo(map);
       offers.forEach((offer) => {
-        const iconType = offer.id === activeCardId ? activeCustomIcon : customIcon;
+        const iconType = offer.id === (activeOfferId ?? activeCardId) ? activeCustomIcon : customIcon;
         leaflet.marker({
           lat: offer.location.latitude,
           lng: offer.location.longitude,
@@ -72,7 +73,7 @@ function Map(props) {
     if (map) {
       return () => layerGroup.clearLayers();
     }
-  }, [map, offers, mapValue, activeCardId]);
+  }, [map, offers, mapValue, activeCardId, activeOfferId]);
 
   return (
     <div style={{ height: '100%' }} ref={mapRef}>
@@ -82,6 +83,7 @@ function Map(props) {
 
 Map.propTypes = {
   offers: cardListProp,
+  activeOfferId: PropTypes.number,
 };
 
 export default Map;

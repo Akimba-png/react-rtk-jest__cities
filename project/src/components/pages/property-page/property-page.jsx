@@ -179,7 +179,7 @@ function PropertyPage({match}) {
             </div>
           </div>
           <section className="property__map map">
-            <Map offers={nearbyOffers} />
+            <Map offers={[...nearbyOffers, offer]} activeOfferId={id} />
           </section>
         </section>
         <div className="container">
