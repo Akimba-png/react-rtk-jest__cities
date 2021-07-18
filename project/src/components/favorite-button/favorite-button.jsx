@@ -26,14 +26,15 @@ function FavoriteButton({ favoriteStatus: defaultStatus, offerId, cssValue = {} 
     SVG_HEIGHT = '19',
   } = cssValue;
 
+  const onChangeStatus = () => setFavoriteViewStatus((prevState) => !prevState);
+
   const handleFavoriteStatus = () => {
     if (authorizationStatus !== AuthorizationStatus.AUTH) {
       setRedirectStatus(true);
       return;
     }
     const currentStatus = favoriteViewStatus ? 0 : Index.FIRST;
-    dispatch(setFavoriteStatus(offerId, currentStatus));
-    setFavoriteViewStatus((prevState) => !prevState);
+    dispatch(setFavoriteStatus(offerId, currentStatus, onChangeStatus));
   };
 
   return (

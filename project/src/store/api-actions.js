@@ -7,7 +7,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) =>
     .then(({ data }) => data.map(adaptOfferToClient))
     .then((offers) => dispatch(loadOffers(offers)));
 
-export const setFavoriteStatus = (offerId, status) => (dispatch, getState, api) =>
+export const setFavoriteStatus = (offerId, status, handleFavoriteStatus) => (dispatch, getState, api) =>
   api.post(favoriteRoute.postFavoriteStatus(offerId, status))
     .then(({ data }) => adaptOfferToClient(data))
     .then((offer) => {
@@ -18,7 +18,8 @@ export const setFavoriteStatus = (offerId, status) => (dispatch, getState, api) 
         ...offers.slice(offerId, offerId.length),
       ];
       dispatch(loadOffers(updatedOffers));
-    });
+    })
+    .then(handleFavoriteStatus);
 
 export const checkAuth = () => (dispatch, _getState, api) =>
   api.get(ApiRoute.LOGIN)

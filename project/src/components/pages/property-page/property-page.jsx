@@ -18,6 +18,7 @@ import { getAuthorizationStatus } from './../../../store/user/selectors';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
+const MAX_IMAGE_NUMBER = 6;
 
 const FavoriteButtonCssValue = {
   BUTTON_CLASS_NAME: 'property__bookmark-button',
@@ -96,7 +97,7 @@ function PropertyPage({match}) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => {
+              {images.slice(0, MAX_IMAGE_NUMBER).map((image, index) => {
                 const keyValue = `${index}-${image}`;
                 return (
                   <div key={keyValue} className="property__image-wrapper">

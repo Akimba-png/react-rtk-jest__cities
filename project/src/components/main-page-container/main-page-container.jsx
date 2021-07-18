@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getFilteredOffers } from './../../store/selectors';
@@ -11,11 +11,14 @@ import MainPageMap from './../maps/main-page-map/main-page-map';
 
 function MainPageContainer({ onOffersUnavailable }) {
   const isCityOffersAvailable = useSelector(getFilteredOffers).length !== 0;
-  if (!isCityOffersAvailable) {
-    onOffersUnavailable(true);
-    return <MainPageEmpty />;
-  }
-  return (
+
+  useEffect(() => {
+    if (!isCityOffersAvailable) {
+      onOffersUnavailable(true);
+    }
+  });
+
+  return !isCityOffersAvailable ? <MainPageEmpty /> : (
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
