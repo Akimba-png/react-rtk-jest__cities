@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +13,10 @@ function FavoriteButton({ favoriteStatus: defaultStatus, offerId, cssValue = {} 
   const dispatch = useDispatch();
   const [redirectStatus, setRedirectStatus] = useState(false);
   const [favoriteViewStatus, setFavoriteViewStatus] = useState(defaultStatus);
+
+  useEffect(() => {
+    setFavoriteViewStatus(defaultStatus);
+  }, [defaultStatus]);
 
   const {
     BUTTON_CLASS_NAME = 'place-card__bookmark-button',

@@ -33,8 +33,16 @@ export const login = ({ email, password }) => (dispatch, _getState, api) =>
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirect(AppRoute.MAIN)));
 
-
-export const logout = () => (dispatch, _getState, api) =>
+export const logout = () => (dispatch, getState, api) =>
   api.delete(ApiRoute.LOGOUT)
     .then(() => localStorage.removeItem('userData'))
-    .then(() => dispatch(closeSession()));
+    .then(() => dispatch(closeSession()))
+    .then(() => {
+      const offers = getState().DATA.offers.map((offer) => (
+        {
+          ...offer,
+          isFavorite: false,
+        }
+      ));
+      dispatch(loadOffers(offers));
+    });
