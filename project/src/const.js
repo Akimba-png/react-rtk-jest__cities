@@ -1,3 +1,4 @@
+export const TEST_NUMBER = 23;
 export const LOCATIONS = [
   'Paris',
   'Cologne',
