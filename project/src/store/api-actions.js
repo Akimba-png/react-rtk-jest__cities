@@ -30,7 +30,10 @@ export const checkAuth = () => (dispatch, _getState, api) =>
 export const login = ({ email, password }) => (dispatch, _getState, api) =>
   api.post(ApiRoute.LOGIN, { email, password })
     .then(({ data }) => adaptUserDataToClient(data))
-    .then((userData) => localStorage.setItem('userData', JSON.stringify(userData)))
+    .then((userData) => {
+      localStorage.setItem('userData', JSON.stringify(userData));
+      api.defaults.headers['x-token'] = userData.token;
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirect(AppRoute.MAIN)));
 
