@@ -3,8 +3,8 @@ import Logo from '../../logo/logo';
 import LocationList from './../../location-list/location-list';
 import Navigation from './../../navigation/navigation';
 import MainPageContainer from './../../main-page-container/main-page-container';
+import { LOGO_ACTIVE_MODE } from './../../../const';
 
-const LOGO_ACTIVE_MODE = true;
 
 function MainPage() {
   const [cityOffersUnavailable, setCityOffersUnavailable] = useState(false);

@@ -47,6 +47,7 @@ function Card(props) {
   return (
     <article className={`${ARTICLE_CLASS_NAME} place-card`}
       onMouseEnter={hanldeActiveCardIdOnMouseOver}
+      data-testid="card"
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className={`${IMAGE_WRAPPER_CLASS_NAME} place-card__image-wrapper`}>

@@ -12,7 +12,7 @@ function LocationList() {
     () => dispatch(changeCity(location));
 
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid="location-list">
       {LOCATIONS.map((location, index) => {
         const keyValue = `${index}-${location}`;
         return (

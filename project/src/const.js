@@ -1,3 +1,4 @@
+export const LOGO_ACTIVE_MODE = true;
 export const TEST_NUMBER = 23;
 export const LOCATIONS = [
   'Paris',
@@ -80,6 +81,10 @@ export const SortValue = {
 };
 
 export const TestData = {
+  SERVER_SUCCESSFUL_CODE: 200,
+  CITY: 'Amsterdam',
+  SORT_TYPE: 'Popular',
+  ACTIVE_CARD_ID: 1,
   INCOME_OFFERS: [
     {
       'bedrooms': 3,
@@ -152,5 +157,24 @@ export const TestData = {
       type: 'apartment',
     },
   ],
-  SERVER_SUCCESSFUL_CODE: 200,
+};
+
+export const TEST_REVIEWS = [
+  {
+    comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    date: '2019-05-08T14:13:56.569Z',
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: 'img/1.png',
+      id: 4,
+      isPro: false,
+      name: 'Max',
+    },
+  },
+];
+
+export const TestUserInfo = {
+  EMAIL: 'asd@sfd.me',
+  AVATAR_URL: 'https://7.react.pages.academy/static/avatar/7.jpg',
 };

@@ -44,13 +44,13 @@ function LoginPage() {
             <h1 className="login__title">Sign in</h1>
             <form onSubmit={handleSubmit(handleLoginFormSubmit)} className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">E-mail</label>
-                <input {...register('email')} className="login__input form__input" type="email" name="email" placeholder="Email" required="required" />
+                <label className="visually-hidden" htmlFor="email">E-mail</label>
+                <input {...register('email')} data-testid="email" className="login__input form__input" type="email" name="email" id="email" placeholder="Email" required="required" />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
-                <label className="visually-hidden">Password</label>
+                <label className="visually-hidden" htmlFor="password">Password</label>
                 {errors.password && <span>{VALIDITY_MESSAGE}</span>}
-                <input {...register('password', { pattern: /\S/ })} className="login__input form__input" type="password" name="password" placeholder="Password" required="required" />
+                <input {...register('password', { pattern: /\S/ })} data-testid="password" className="login__input form__input" type="password" name="password" id="password" placeholder="Password" required="required" />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
