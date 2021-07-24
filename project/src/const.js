@@ -12,6 +12,7 @@ export const LOCATIONS = [
 export const Index = {
   FIRST: 1,
   THIRD: 2,
+  FOURTH: 3,
 };
 
 export const AppRoute = {
