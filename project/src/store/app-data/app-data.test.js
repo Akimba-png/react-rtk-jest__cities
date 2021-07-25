@@ -1,27 +1,12 @@
 import { appData } from './app-data';
 import { ActionType } from './../action';
+import { TestData } from './../../const';
 
 const initialState = {
   offers: [],
   isDataLoaded: false,
+  isServerAvailable: true,
 };
-
-const OFFERS = [
-  {
-    city: 'Cartagena',
-    goods: ['Kitchen', 'Fridge'],
-    host: 'Bartholomeow',
-    id: 1,
-    price: 500,
-  },
-  {
-    city: 'Barbados',
-    goods: ['Heating', 'Dishwasher'],
-    host: 'Blackbeard',
-    id: 2,
-    price: 1500,
-  },
-];
 
 describe('Reducer: appData', () => {
   it('should return initial state if wrong arguments are passed', () => {
@@ -31,12 +16,25 @@ describe('Reducer: appData', () => {
   it('should update offers property by load offers', () => {
     const loadOffersAction = {
       type: ActionType.LOAD_OFFERS,
-      payload: OFFERS,
+      payload: TestData.EXPECTED_OFFERS[0],
     };
     const expectedState = {
-      offers: OFFERS,
+      offers: TestData.EXPECTED_OFFERS[0],
       isDataLoaded: true,
+      isServerAvailable: true,
     };
     expect(appData(initialState, loadOffersAction)).toEqual(expectedState);
+  });
+
+  it('should change server available status properly when server is unavailable', () => {
+    const changeErrorAction = {
+      type: ActionType.CHANGE_ERROR_STATUS,
+    };
+    const expectedState = {
+      offers: [],
+      isDataLoaded: false,
+      isServerAvailable: false,
+    };
+    expect(appData(initialState, changeErrorAction)).toEqual(expectedState);
   });
 });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import LoadingPage from './../loading-page/loading-page';
@@ -15,6 +15,7 @@ import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/serve
 import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
 import { api } from './../../../store/store';
 import { getAuthorizationStatus } from './../../../store/user/selectors';
+import { changeErrorStatus } from './../../../store/action';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
@@ -32,6 +33,8 @@ function PropertyPage({match}) {
   const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
   const [propertyData, setPropertyData] = useState(null);
   const [errorStatus, setErrorStatus] = useState(null);
+  const dispatch = useDispatch();
+
   const offerId = match.params.id;
 
   useEffect(() => {
@@ -44,9 +47,12 @@ function PropertyPage({match}) {
         .then(({ data }) => data.map(adaptCommentToClient)),
     ]).then((data) => setPropertyData(data))
       .catch((error) => {
+        if (!error.response) {
+          return dispatch(changeErrorStatus());
+        }
         setErrorStatus(error.response.status);
       });
-  }, [offerId]);
+  }, [offerId, dispatch]);
 
   if (errorStatus === NOT_FOUND_ERROR) {
     return <NotFoundPage />;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
+import ErrorMessage from './../../error-message/error-message';
 import { login } from './../../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from './../../../const';
 import { getAuthorizationStatus } from './../../../store/user/selectors';
@@ -11,6 +12,7 @@ import { getAuthorizationStatus } from './../../../store/user/selectors';
 const VALIDITY_MESSAGE = 'Это небезопасный пароль, добавьте символ отличный от пробела';
 
 function LoginPage() {
+  const [errorStatus, setErrorStatus] = useState(false);
   const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
   const { register, handleSubmit, getValues, formState: { errors } } = useForm();
@@ -24,7 +26,7 @@ function LoginPage() {
       email: getValues().email,
       password: getValues().password,
     };
-    dispatch(login(formValue));
+    dispatch(login(formValue, setErrorStatus));
   };
 
   return (
@@ -54,6 +56,7 @@ function LoginPage() {
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
+            {errorStatus && <ErrorMessage />}
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">

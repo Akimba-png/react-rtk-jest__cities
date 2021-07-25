@@ -1,5 +1,7 @@
 import { AuthorizationStatus } from './../const';
 
+const ERROR_MESSAGE_SHOW_TIME = 2000;
+
 export const isAuthorizationStatusReceived = (currentAuthorizationStatus) =>
   currentAuthorizationStatus !== AuthorizationStatus.UNKNOWN;
 
@@ -63,4 +65,11 @@ export const adaptCommentToClient = (comment) => {
   delete adaptedComment.user.avatar_url;
   delete adaptedComment.user.is_pro;
   return adaptedComment;
+};
+
+export const toggleErrorStatus = (setStatus) => {
+  setStatus((prevState) => !prevState);
+  setTimeout(() => {
+    setStatus((prevState) => !prevState);
+  }, ERROR_MESSAGE_SHOW_TIME);
 };

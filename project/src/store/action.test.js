@@ -7,7 +7,8 @@ import {
   requireAuthorization,
   logout,
   redirect,
-  ActionType
+  ActionType,
+  changeErrorStatus
 } from './action';
 
 describe('Actions', () => {
@@ -70,5 +71,12 @@ describe('Actions', () => {
     };
     const URL = 'https://htmlacademy.ru/';
     expect(redirect(URL)).toEqual(expectedAction);
+  });
+
+  it('action creator for changeErrorStatus returns correct action', () => {
+    const expectedAction = {
+      type: ActionType.CHANGE_ERROR_STATUS,
+    };
+    expect(changeErrorStatus()).toEqual(expectedAction);
   });
 });

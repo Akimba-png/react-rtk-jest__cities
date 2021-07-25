@@ -4,6 +4,7 @@ export const ActionType = {
   CHANGE_CITY: 'appInteraction/changeCity',
   CHANGE_SORTIG: 'appInteraction/changeSorting',
   CHANGE_ACTIVE_CARD_ID: 'appInteraction/changeActiveCardId',
+  CHANGE_ERROR_STATUS: 'data/changeErrorStatus',
   LOAD_OFFERS: 'data/loadOffers',
   REQUIRE_AUTHORIZATION: 'user/requireAuthorization',
   LOGOUT: 'user/logout',
@@ -41,3 +42,6 @@ export const redirect =
 createAction(ActionType.REDIRECT, (url) => ({
   payload: url,
 }));
+
+export const changeErrorStatus =
+createAction(ActionType.CHANGE_ERROR_STATUS);
