@@ -9,7 +9,10 @@ import { login } from './../../../store/api-actions';
 import { AuthorizationStatus, AppRoute } from './../../../const';
 import { getAuthorizationStatus } from './../../../store/user/selectors';
 
-const VALIDITY_MESSAGE = 'Это небезопасный пароль, добавьте символ отличный от пробела';
+const VALIDITY_EMAIL_MESSAGE = 'Введите почтовый адрес в формате: ****@**.**';
+const VALIDITY_PASSWORD_MESSAGE = 'Это небезопасный пароль, добавьте символ отличный от пробела';
+const renderErrorMessage = (validityMessage) =>
+  (<span style={{ color: 'red' }}>{validityMessage}</span>);
 
 function LoginPage() {
   const [errorStatus, setErrorStatus] = useState(false);
@@ -47,11 +50,12 @@ function LoginPage() {
             <form onSubmit={handleSubmit(handleLoginFormSubmit)} className="login__form form" action="#" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden" htmlFor="email">E-mail</label>
-                <input {...register('email')} data-testid="email" className="login__input form__input" type="email" name="email" id="email" placeholder="Email" required="required" />
+                {errors.email && renderErrorMessage(VALIDITY_EMAIL_MESSAGE)}
+                <input {...register('email', { pattern: /\S+@\S+\.[A-Za-z]+$/ })} data-testid="email" className="login__input form__input" type="email" name="email" id="email" placeholder="Email" required="required" />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden" htmlFor="password">Password</label>
-                {errors.password && <span>{VALIDITY_MESSAGE}</span>}
+                {errors.password && renderErrorMessage(VALIDITY_PASSWORD_MESSAGE)}
                 <input {...register('password', { pattern: /\S/ })} data-testid="password" className="login__input form__input" type="password" name="password" id="password" placeholder="Password" required="required" />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>

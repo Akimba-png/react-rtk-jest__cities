@@ -180,7 +180,7 @@ function PropertyPage({match}) {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <ReviewsList reviews={reviews} reviewsAmount={reviewsAmount} />
+                <ReviewsList reviews={reviews} />
                 {isAuthorized && <ReviewForm reviewsAmount={reviewsAmount} onSendReview={handleCommentChange} offerId={offerId} />}
               </section>
             </div>
