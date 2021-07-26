@@ -5,6 +5,7 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import App from './app';
+import { api } from './../../store/store';
 import {
   AppRoute,
   TestData,
@@ -15,6 +16,7 @@ import {
   Index
 } from './../../const';
 
+jest.mock('./../../store/store');
 const mockStore = configureStore({});
 let store;
 let history;
@@ -58,10 +60,11 @@ describe('Component: App', () => {
     expect(screen.getByText('1 place to stay in Amsterdam')).toBeInTheDocument();
   });
 
-  it('should render favorite page, when url is /favorite', () => {
+  it('should render favorite page, when url is /favorite', async () => {
     history.push(AppRoute.FAVORITE);
+    api.mockImplementationOnce(() => Promise.resolve({ data: []}));
     render(fakeApp);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Nothing yet saved.')).toBeInTheDocument();
   });
 
   it('should render login page, when url is /login', () => {
@@ -84,8 +87,9 @@ describe('Component: App', () => {
     expect(screen.getByTestId('email')).toBeInTheDocument();
   });
 
-  it('should render property page, when url is /property', () => {
+  it('should render property page, when url is /property', async () => {
     history.push(AppRoute.PROPERTY);
+    api.get.mockImplementation(() => Promise.resolve({ data: []}));
     render(fakeApp);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
