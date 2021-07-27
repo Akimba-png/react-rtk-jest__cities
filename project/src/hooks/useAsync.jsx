@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { api } from './../store/store';
 import { propertyRoute } from './../const';
