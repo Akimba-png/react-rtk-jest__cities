@@ -6,17 +6,21 @@ import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import App from './app';
 import { api } from './../../store/store';
+import { useAsync } from './../../hooks/useAsync';
 import {
   AppRoute,
   TestData,
   AuthorizationStatus,
   TestUserInfo,
+  TEST_REVIEWS,
   LOCATIONS,
   SortValue,
   Index
 } from './../../const';
 
 jest.mock('./../../store/store');
+jest.mock('./../../hooks/useAsync');
+
 const mockStore = configureStore({});
 let store;
 let history;
@@ -89,9 +93,20 @@ describe('Component: App', () => {
 
   it('should render property page, when url is /property', async () => {
     history.push(AppRoute.PROPERTY);
-    api.get.mockImplementation(() => Promise.resolve({ data: []}));
+    useAsync.mockImplementation(() => (
+      {
+        propertyData: [
+          TestData.EXPECTED_OFFERS[0],
+          TestData.EXPECTED_OFFERS,
+          TEST_REVIEWS,
+        ],
+        errorSatus: null,
+        setPropertyData: jest.fn(),
+        offerId: `${Index.FIRST.toString}`,
+      }
+    ));
     render(fakeApp);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(await screen.findByText('Meet the host')).toBeInTheDocument();
   });
 
   it('should render non found page when there is non-existent route', () => {

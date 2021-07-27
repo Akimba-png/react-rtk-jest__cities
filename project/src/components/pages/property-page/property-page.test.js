@@ -5,8 +5,8 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, screen } from '@testing-library/react';
 import PropertyPage from './property-page';
-import { useAsync } from './../../../hooks/useAsync';
-import { AuthorizationStatus, TestData, TEST_REVIEWS, TestUserInfo, Index } from './../../../const';
+import { useAsync } from '../../../hooks/useAsync';
+import { AuthorizationStatus, TestData, TEST_REVIEWS, TestUserInfo, Index } from '../../../const';
 
 
 jest.mock('./../../../hooks/useAsync');

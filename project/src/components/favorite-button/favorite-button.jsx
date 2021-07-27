@@ -42,7 +42,12 @@ function FavoriteButton({ favoriteStatus: defaultStatus, offerId, cssValue = {} 
   return (
     <React.Fragment>
       {errorStatus && <ErrorMessage />}
-      <button onClick={handleFavoriteStatus} className={`${BUTTON_CLASS_NAME} ${favoriteViewStatus ? BUTTON_CLASS_NAME_ACTIVE : ''} button`} type="button">
+      <button
+        onClick={handleFavoriteStatus}
+        className={`${BUTTON_CLASS_NAME} ${favoriteViewStatus ? BUTTON_CLASS_NAME_ACTIVE : ''} button`}
+        type="button"
+        data-testid="favorite-button"
+      >
         <svg className={SVG_CLASS_NAME} width={SVG_WIDTH} height={SVG_HEIGHT}>
           <use xlinkHref="#icon-bookmark"></use>
         </svg>
