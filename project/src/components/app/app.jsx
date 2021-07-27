@@ -40,7 +40,7 @@ function App() {
       </PrivateRoute>
       <Route
         exact path={AppRoute.PROPERTY}
-        render={(routerProps) => <PropertyPage {...routerProps} />}
+        render={() => <PropertyPage />}
       >
       </Route>
       <Route>

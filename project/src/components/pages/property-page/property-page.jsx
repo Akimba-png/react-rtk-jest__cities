@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useAsync } from './../../../hooks/useAsync';
 import Logo from './../../logo/logo';
 import Navigation from './../../navigation/navigation';
 import LoadingPage from './../loading-page/loading-page';
@@ -11,11 +11,8 @@ import Map from './../../maps/map/map';
 import CardList from './../../cards/card-list/card-list';
 import FavoriteButton from './../../favorite-button/favorite-button';
 import { convertValueToShare } from './../../../utils/common';
-import { adaptOfferToClient, adaptCommentToClient } from './../../../utils/server';
-import { propertyRoute, Index, AuthorizationStatus } from './../../../const';
-import { api } from './../../../store/store';
+import { Index, AuthorizationStatus } from './../../../const';
 import { getAuthorizationStatus } from './../../../store/user/selectors';
-import { changeErrorStatus } from './../../../store/action';
 
 const PLURAL_POSTFIX = 's';
 const NOT_FOUND_ERROR = 404;
@@ -29,30 +26,15 @@ const FavoriteButtonCssValue = {
   SVG_HEIGHT: '33',
 };
 
-function PropertyPage({match}) {
+function PropertyPage() {
+
   const currentAuthorizationStatus = useSelector(getAuthorizationStatus);
-  const [propertyData, setPropertyData] = useState(null);
-  const [errorStatus, setErrorStatus] = useState(null);
-  const dispatch = useDispatch();
-
-  const offerId = match.params.id;
-
-  useEffect(() => {
-    Promise.all([
-      api.get(propertyRoute.getOffer(offerId))
-        .then(({ data }) => adaptOfferToClient(data)),
-      api.get(propertyRoute.getOfferNearby(offerId))
-        .then(({ data }) => data.map(adaptOfferToClient)),
-      api.get(propertyRoute.getComment(offerId))
-        .then(({ data }) => data.map(adaptCommentToClient)),
-    ]).then((data) => setPropertyData(data))
-      .catch((error) => {
-        if (!error.response) {
-          return dispatch(changeErrorStatus());
-        }
-        setErrorStatus(error.response.status);
-      });
-  }, [offerId, dispatch]);
+  const {
+    propertyData,
+    errorStatus,
+    setPropertyData,
+    offerId,
+  } = useAsync();
 
   if (errorStatus === NOT_FOUND_ERROR) {
     return <NotFoundPage />;
@@ -201,16 +183,5 @@ function PropertyPage({match}) {
     </div>
   );
 }
-
-PropertyPage.propTypes = {
-  match: PropTypes.shape({
-    isExact: PropTypes.bool,
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }),
-    path: PropTypes.string,
-    url: PropTypes.string,
-  }),
-};
 
 export default PropertyPage;
