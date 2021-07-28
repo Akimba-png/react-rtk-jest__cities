@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Logo from '../../logo/logo';
 import Navigation from './../../navigation/navigation';
@@ -6,12 +7,14 @@ import FavoriteItem from './../../favorite-item/favorite-item';
 import LoadingPage from './../loading-page/loading-page';
 import FavoriteEmpty from './../../favorite-empty/favorite-empty';
 import { api } from './../../../store/store';
+import { changeErrorStatus } from './../../../store/action';
 import { adaptOfferToClient } from './../../../utils/server';
 import { AppRoute, ApiRoute } from './../../../const';
 
 
 function FavoritesPage() {
   const [favoriteOffers, setFavoriteOffers] = useState(null);
+  const dispatch = useDispatch();
 
   const sortOffers = (offers) =>
     offers.reduce((sortedOfferBlock, offer) => {
@@ -23,8 +26,9 @@ function FavoritesPage() {
     api(ApiRoute.FAVORITE)
       .then(({ data }) => data.map(adaptOfferToClient))
       .then(sortOffers)
-      .then((sortedOfferBlock) => setFavoriteOffers(Object.entries(sortedOfferBlock)));
-  }, []);
+      .then((sortedOfferBlock) => setFavoriteOffers(Object.entries(sortedOfferBlock)))
+      .catch(() => dispatch(changeErrorStatus()));
+  }, [dispatch]);
 
   if (!favoriteOffers) {
     return <LoadingPage />;

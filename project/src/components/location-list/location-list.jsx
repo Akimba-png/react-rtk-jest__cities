@@ -9,15 +9,22 @@ function LocationList() {
   const dispatch = useDispatch();
 
   const handleLinkClick = (location) =>
-    () => dispatch(changeCity(location));
+    (evt) => {
+      evt.preventDefault();
+      dispatch(changeCity(location));
+    };
 
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid="location-list">
       {LOCATIONS.map((location, index) => {
         const keyValue = `${index}-${location}`;
         return (
           <li className="locations__item" key={keyValue}>
-            <a onClick={handleLinkClick(location)} className={`locations__item-link tabs__item ${location === city ? 'tabs__item--active' : ''}`} href="/#">
+            <a
+              onClick={handleLinkClick(location)}
+              className={`locations__item-link tabs__item ${location === city ? 'tabs__item--active' : ''}`}
+              href="/#"
+            >
               <span>{location}</span>
             </a>
           </li>

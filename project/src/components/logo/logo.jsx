@@ -6,7 +6,7 @@ function Logo({ logoActiveMode }) {
   if (logoActiveMode) {
     return (
       <div className="header__left">
-        <Link className="header__logo-link header__logo-link--active test" to="/#">
+        <Link className="header__logo-link header__logo-link--active" to="/#" data-testid="logo-link">
           <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
         </Link>
       </div>
@@ -14,7 +14,7 @@ function Logo({ logoActiveMode }) {
   }
   return (
     <div className="header__left">
-      <Link className="header__logo-link" to="/">
+      <Link className="header__logo-link" to="/" data-testid="logo-link">
         <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
       </Link>
     </div>

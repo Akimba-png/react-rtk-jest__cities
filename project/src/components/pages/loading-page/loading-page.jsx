@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getServerAvailableStatus } from './../../../store/app-data/selectors';
+import ErrorMessage from './../../error-message/error-message';
 
 function LoadingPage() {
+  const errorStatus = useSelector(getServerAvailableStatus);
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index page__main--index-empty">
@@ -9,6 +13,7 @@ function LoadingPage() {
             <section className="cities__no-places">
               <div className="cities__status-wrapper tabs__content">
                 <h1 className="cities__status">Loading...</h1>
+                {!errorStatus && <ErrorMessage />}
               </div>
             </section>
             <div className="cities__right-section"></div>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import ErrorMessage from './../error-message/error-message';
 import { logout } from './../../store/api-actions';
 import { getAuthorizationStatus } from './../../store/user/selectors';
 import { AuthorizationStatus, ApiRoute, AppRoute } from './../../const';
@@ -8,6 +9,7 @@ import { AuthorizationStatus, ApiRoute, AppRoute } from './../../const';
 function Navigation() {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
+  const [errorStatus, setErrorStatus] = useState(false);
 
   if (authorizationStatus === AuthorizationStatus.AUTH) {
 
@@ -19,27 +21,30 @@ function Navigation() {
 
     const handleSignOutButton = (evt) => {
       evt.preventDefault();
-      dispatch(logout());
+      dispatch(logout(setErrorStatus));
     };
 
     return (
-      <nav className="header__nav">
-        <ul className="header__nav-list">
-          <li className="header__nav-item user">
-            <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITE}>
-              <div className="header__avatar-wrapper user__avatar-wrapper">
-                <img src={userDetails.avatar} alt="user's avatar" />
-              </div>
-              <span className="header__user-name user__name">{userDetails.email}</span>
-            </Link>
-          </li>
-          <li className="header__nav-item">
-            <a onClick={handleSignOutButton} className="header__nav-link" href="/#">
-              <span className="header__signout">Sign out</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <React.Fragment>
+        {errorStatus && <ErrorMessage />}
+        <nav className="header__nav">
+          <ul className="header__nav-list">
+            <li className="header__nav-item user">
+              <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITE}>
+                <div className="header__avatar-wrapper user__avatar-wrapper">
+                  <img src={userDetails.avatar} alt="user's avatar" />
+                </div>
+                <span className="header__user-name user__name">{userDetails.email}</span>
+              </Link>
+            </li>
+            <li className="header__nav-item">
+              <a onClick={handleSignOutButton} className="header__nav-link" href="/#">
+                <span className="header__signout">Sign out</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </React.Fragment>
     );
   } return (
     <nav className="header__nav">

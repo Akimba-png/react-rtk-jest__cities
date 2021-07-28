@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSorting } from './../../store/action';
 import { SortValue } from './../../const';
 import { getActiveSortType } from './../../store/app-interaction/selectors';
+
+const CLASS_OPEN = 'places__options--opened';
 
 function Sorting() {
   const sortType = useSelector(getActiveSortType);
   const dispatch = useDispatch();
   const [sortWindowMode, setSortWindowMode] = useState('');
 
+  useEffect(() =>
+    () => {
+      if (sortWindowMode === CLASS_OPEN) {
+        setSortWindowMode('');
+      }
+    },
+  );
+
   const toggleSortWindowMode = () => {
     if (sortWindowMode === '') {
-      setSortWindowMode('places__options--opened');
+      setSortWindowMode(CLASS_OPEN);
     } else {
       setSortWindowMode('');
     }

@@ -11,7 +11,7 @@ function MainPageCardList() {
   const resetActiveCardId = () => dispatch(changeActiveCardId(null));
 
   return (
-    <div onMouseLeave={resetActiveCardId} className="cities__places-list places__list tabs__content">
+    <div onMouseLeave={resetActiveCardId} className="cities__places-list places__list tabs__content" data-testid="main-page-containter">
       <CardList offers={offers} cardMode={CardCssValue.Main} />
     </div>
   );
